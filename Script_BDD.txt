@@ -1,0 +1,104 @@
+-- Création de la base de données
+CREATE DATABASE IF NOT EXISTS Virtucom;
+
+-- Utilisation de la base de données
+USE Virtucom;
+
+-- Création de la table "roles"
+CREATE TABLE IF NOT EXISTS roles (
+    id_role INT AUTO_INCREMENT PRIMARY KEY,
+    name_role VARCHAR(255) NOT NULL
+);
+
+-- Création de la table "users"
+CREATE TABLE IF NOT EXISTS users (
+    id_user INT AUTO_INCREMENT PRIMARY KEY,
+    firstname_user VARCHAR(255) NOT NULL,
+    lastname_user VARCHAR(255) NOT NULL,
+    email_user VARCHAR(255) NOT NULL,
+    password_user VARCHAR(255) NOT NULL,
+    availability_user BOOLEAN NOT NULL,
+    id_role INT,
+    FOREIGN KEY (id_role) REFERENCES roles(id_role)
+);
+
+-- Création de la table "status"
+CREATE TABLE IF NOT EXISTS status (
+    id_status INT AUTO_INCREMENT PRIMARY KEY,
+    type_status VARCHAR(255) NOT NULL,
+    name_status VARCHAR(255) NOT NULL
+);
+
+-- Création de la table "requests"
+CREATE TABLE IF NOT EXISTS requests (
+    id_request INT AUTO_INCREMENT PRIMARY KEY,
+    description TEXT,
+    request_status INT,
+    id_role INT,
+    id_user INT,
+    FOREIGN KEY (request_status) REFERENCES status(id_status),
+    FOREIGN KEY (id_role) REFERENCES roles(id_role),
+    FOREIGN KEY (id_user) REFERENCES users(id_user)
+);
+
+-- Création de la table "conversations"
+CREATE TABLE IF NOT EXISTS conversations (
+    id_conversation INT AUTO_INCREMENT PRIMARY KEY,
+    id_responsible INT,
+    id_request INT,
+    FOREIGN KEY (id_responsible) REFERENCES users(id_user),
+    FOREIGN KEY (id_request) REFERENCES requests(id_request)
+);
+
+-- Création de la table "messages"
+CREATE TABLE IF NOT EXISTS messages (
+    id_message INT AUTO_INCREMENT PRIMARY KEY,
+    message_text TEXT,
+    id_sender INT,
+    FOREIGN KEY (id_sender) REFERENCES users(id_user)
+);
+
+-- Création de la table "priorities"
+CREATE TABLE IF NOT EXISTS priorities (
+    id_priority INT AUTO_INCREMENT PRIMARY KEY,
+    name_priority VARCHAR(255) NOT NULL
+);
+
+-- Création de la table "tickets"
+CREATE TABLE IF NOT EXISTS tickets (
+    id_ticket INT AUTO_INCREMENT PRIMARY KEY,
+    ticket_status INT,
+    priority_ticket INT,
+    id_conversation INT,
+    FOREIGN KEY (ticket_status) REFERENCES status(id_status),
+    FOREIGN KEY (priority_ticket) REFERENCES priorities(id_priority),
+    FOREIGN KEY (id_conversation) REFERENCES conversations(id_conversation)
+);
+
+
+-- Ajouter les nouveaux statuts à la table "status"
+INSERT INTO status (type_status, name_status) VALUES
+    ('request', 'Accepted'),
+    ('request', 'Pending'),
+    ('request', 'Denied'),
+    ('ticket', 'TODO'),
+    ('ticket', 'IN PROGRESS'),
+    ('ticket', 'DONE');
+
+-- Ajouter les nouvelles priorités à la table "priorities"
+INSERT INTO priorities (name_priority) VALUES
+    ('Urgent'),
+    ('High'),
+    ('Normal'),
+    ('Low');
+
+-- Ajouter les nouveaux rôles à la table "roles"
+INSERT INTO roles (name_role) VALUES
+    ('Project manager'),
+    ('Chief Technology Officer'),
+    ('Product owner'),
+    ('Backend developer'),
+    ('Frontend developer'),
+    ('Tester'),
+    ('Security officer'),
+    ('System administrator');
