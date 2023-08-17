@@ -4,7 +4,7 @@
 	// Création de la connexion avec la base de données
 	$servername = "localhost";
 	$username = "root";
-	$password = "root";
+	$password = "";
 	$dbname = "virtucom";
     $conn = new mysqli($servername, $username, $password, $dbname);
 
