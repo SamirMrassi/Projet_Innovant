@@ -42,5 +42,5 @@ Ce projet consiste en un outil de collaboration entre les membres d'une équipe,
 ## Auteur
 
 [Mrassi Samir](https://github.com/SamirMrassi)
-[Trabelsi Lydia](https://github.com/VotreUtilisateur)
+[Trabelsi Lydia](https://github.com/lydiatrabelsi)
 

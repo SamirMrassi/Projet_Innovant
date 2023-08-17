@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS users (
     lastname_user VARCHAR(255) NOT NULL,
     email_user VARCHAR(255) NOT NULL,
     password_user VARCHAR(255) NOT NULL,
-    availability_user BOOLEAN NOT NULL,
+    availability_user BOOLEAN,
     id_role INT,
     FOREIGN KEY (id_role) REFERENCES roles(id_role)
 );
