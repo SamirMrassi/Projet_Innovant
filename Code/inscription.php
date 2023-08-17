@@ -7,13 +7,32 @@
 	</head>
 
 	<body>
-		<h2> Page d'inscription </h2>
-
+		<h1> Virtu'Com </h1>
+		<h4> Inscription </h4>
 		<form method="POST" action="">
-			<p> Saisissez un nom d'utilisateur: 
-			<input type="text" name="inscription_username"></p>
+			<p> Prenom: 
+			<input type="text" name="firstname"></p>
+			<p> Nom: 
+			<input type="text" name="lastname"></p>
+			<p> E-mail: 
+			<input type="text" name="email"></p>
 			<p> Saisissez un mot de passe: 
-			<input type="password" name="inscription_password"></p>
+			<input type="password" name="password"></p>
+			<p> Role: 
+			<label for="choice">Sélectionnez une option :</label>
+       		<select id="choice" name="choice" style="width: 200px;">
+            	<?php
+					$stmt = $conn->prepare("SELECT name_role FROM roles");
+                	$stmt->execute();
+                	$roles_list = $stmt->get_result();
+					if ($roles_list->num_rows > 0) {
+						while ($row = $roles_list->fetch_assoc()) {
+							echo '<option value="' . $row["name_role"] . '">' . $row["name_role"] . '</option>';
+
+						}
+					}
+				?>
+       		 </select>
 			<input type="reset" value="Reset">
 			<input type="submit" name="inscription" value="Valider">
 		</form>
