@@ -26,10 +26,10 @@ if (!empty($_POST['email']) AND !empty($_POST['password'])){
             
             echo "success";
         }else{
-            echo "wrong password! Please try again";
+            echo "Mot de passe incorrect! Veuillez réessayer";
         }
     }else{
-        echo "The Email does not exist in our database!"; 
+        echo "Votre email n'existe pas dans nos bases de données!"; 
     }
 }else{
     echo "Veuillez compléter tous les champs!";

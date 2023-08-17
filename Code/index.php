@@ -18,9 +18,9 @@
                     form.innerHTML = `
                         <label for="email">Email :</label>
                         <input type="text" id="email" name="email"><br><br>
-                        <label for="password">Password :</label>
+                        <label for="password">Mot de passe :</label>
                         <input type="password" id="password" name="password"><br><br>
-                        <input type="submit" value="submit">
+                        <input type="submit" value="se connecter">
                         <h4> Vous n'avez pas de compte?  </h4>
                         <a href="inscription.php" > Inscrivez-vous!</a>
                     `;
