@@ -10,7 +10,7 @@
 
     <body>
         <?php
-            echo "<p> Bienvenue " . $_SESSION['username'] . "! Vous êtes maintenant connecté à votre compte. </p>";
+            echo "<p> Bienvenue " . $_SESSION['firstname'] . " " .$_SESSION['lastname'] . "! Vous êtes maintenant connecté à votre compte. </p>";
         ?>
             <form method="POST" action="">
                 <input type="submit" name="deconnexion" value="Déconnexion">
