@@ -7,6 +7,7 @@
     <head>
         <title>Virtu'Com</title>
         <meta charset="utf-8">
+        <link rel="stylesheet" href="indexstyle.css" />
         <script>
             document.addEventListener("DOMContentLoaded", function() {
                 const transformButton = document.getElementById("transformButton");
@@ -15,14 +16,14 @@
                 transformButton.addEventListener("click", function() {
                     // Créer le formulaire
                     const form = document.createElement("form");
+                    form.className = "connection-form";
                     form.innerHTML = `
                         <label for="email">Email :</label>
                         <input type="text" id="email" name="email"><br><br>
                         <label for="password">Mot de passe :</label>
                         <input type="password" id="password" name="password"><br><br>
                         <input type="submit" value="se connecter">
-                        <h4> Vous n'avez pas de compte?  </h4>
-                        <a href="inscription.php" > Inscrivez-vous!</a>
+                        <p> Vous n'avez pas de compte?  <a href="inscription.php" > Inscrivez-vous!</a></p>                        
                     `;
 
                     // Ajouter un gestionnaire d'événements pour la soumission du formulaire
@@ -58,7 +59,7 @@
                                         // Afficher un message d'erreur
                                         const errorDiv = document.createElement("div");
                                         errorDiv.id = "errorDiv";
-                                        errorDiv.style.color = "red";
+                                        errorDiv.className = "error-message";
                                         errorDiv.textContent = response;
                                         form.appendChild(errorDiv);
                                     }
@@ -82,7 +83,6 @@
         <h4> Une communication d'équipe sans frontières ni retards : Virtu'Com réinvente la collaboration en se concentrant sur les rôles, pour des échanges toujours ciblés et en temps voulu. Avec Virtu'Com, dites adieu aux retards de communication ! </h4>
         <br><br>
 
-        <?php echo "Veuillez vous connecter :"; ?>
         <div id="ConnexionForm">
             <button id="transformButton">Connexion</button>
         </div>        
