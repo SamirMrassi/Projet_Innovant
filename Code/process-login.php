@@ -11,17 +11,17 @@ if (!empty($_POST['email']) AND !empty($_POST['password'])){
 
     if ($email_existence->num_rows == 1){
         // Comparer le hash_password enregistré dans la BD avec celui saisie par l'utilisateur
-        $stmt = $conn->prepare("SELECT id_user,password_user FROM users WHERE email_user = ?");
+        $stmt = $conn->prepare("SELECT firstname_user, lastname_user, password_user FROM users WHERE email_user = ?");
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $result = $stmt->get_result();
         $row = $result->fetch_assoc();
+
         $password_given = htmlspecialchars($_POST['password']);
-        
-        if (password_verify($password_given, $row['password'])){
+        if (password_verify($password_given, $row['password_user'])){
             // Remplir les informations de session
-            $id = $row['id'];
-            $_SESSION['id'] = $id;
+            $_SESSION['firstname'] = $row['firstname_user'];
+            $_SESSION['lastname'] = $row['lastname_user'];
             $_SESSION['email'] = $email;
             
             echo "success";
