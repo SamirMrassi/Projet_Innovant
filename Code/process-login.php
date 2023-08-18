@@ -1,5 +1,6 @@
 <?php
 require('./config.php');
+session_start();
 
 if (!empty($_POST['email']) AND !empty($_POST['password'])){
     // Verifier que l'utilisateur est enregistré dans la BD

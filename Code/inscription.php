@@ -4,19 +4,23 @@
 	<head>
 		<title>Inscription</title>
 		<meta charset="utf-8">
+		<link rel="stylesheet" href="inscriptionstyle.css" />
 	</head>
 
 	<body>
+		<header>
+			<!-- <a href='index.php' > Page d'acceuil</a> -->
+			<a href="index.php" style="display: inline-block; padding: 10px 20px; background: linear-gradient(20deg, #24292e, #ffb6c1); color: white; text-decoration: none; border-radius: 5px;">Page d'accueil</a>
+		</header>
 		<h1> Virtu'Com </h1>
-		<h4> Inscription </h4>
-		<form method="POST" action="">
+		<form method="POST" class="inscription-form" action="">
 			<p> Prenom: <input type="text" name="firstname"></p>
 			<p> Nom: <input type="text" name="lastname"></p>
 			<p> E-mail: <input type="text" name="email"></p>
-			<p> Saisissez un mot de passe: <input type="password" name="password"></p>
-			<p> Role: <label for="role">Sélectionnez une option :</label>
+			<p> Mot de passe: <input type="password" name="password"></p>
+			<p> Rôle: <label for="role"></label>
 	       	 <select id="role" name="role" style="width: 200px;">
-			    <option value="">Sélectionnez un rôle</option>
+			    <option value=""></option>
             	<?php
 					$stmt = $conn->prepare("SELECT * FROM roles");
                 	$stmt->execute();
@@ -26,9 +30,9 @@
 							echo '<option value="' . $row["id_role"] . '"  >' . $row["name_role"] . '</option>';
 					}
 				?>
-       		 </select>
+       		 </select><br>
 			 <input type="submit" name="inscription" value="S'inscrire">
-		</form>
+		
 
 		<?php 
 		if (isset($_POST['inscription'])){
@@ -71,7 +75,8 @@
 				echo "<p style='color:red'>Veuillez compléter tous les champs!</p>";
 			}
 		}
-		echo "<a href='index.php' > Page d'acceuil</a>";
+		//echo "<a href='index.php' > Page d'acceuil</a>";
 		?>
+		</form>
 	</body>
 </html>

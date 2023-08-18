@@ -18,9 +18,9 @@
                     const form = document.createElement("form");
                     form.className = "connection-form";
                     form.innerHTML = `
-                        <label for="email">Email :</label>
+                        <label for="email">Email :</label><br>
                         <input type="text" id="email" name="email"><br><br>
-                        <label for="password">Mot de passe :</label>
+                        <label for="password">Mot de passe :</label><br>
                         <input type="password" id="password" name="password"><br><br>
                         <input type="submit" value="se connecter">
                         <p> Vous n'avez pas de compte?  <a href="inscription.php" > Inscrivez-vous!</a></p>                        
