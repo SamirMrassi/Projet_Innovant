@@ -1,5 +1,6 @@
 <?php 
     session_start();
+    require('./config.php');
 ?>
 <!DOCTYPE html>
 <html>
@@ -21,11 +22,11 @@
         </div>  <?php } ?>
     </header>
     <div class="grid-container">
-        <div class="grid-item">Faire une demande</div>
-        <div class="grid-item">Consulter les notifications</div>
-        <div class="grid-item">Consulter les conversations</div>
-        <div class="grid-item">Consulter les tickets</div>
-        <div class="grid-item">Modifier mes disponibilités</div>
+        <a href="demande.php" class="grid-item">Faire une demande</a>
+        <a href="#" class="grid-item">Consulter les notifications</a>
+        <a href="#" class="grid-item">Consulter les conversations</a>
+        <a href="#" class="grid-item">Consulter les tickets</a>
+        <a href="#" class="grid-item">Modifier mes disponibilités</a>
     </div>
 </body>
 </html>
