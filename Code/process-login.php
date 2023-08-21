@@ -24,8 +24,8 @@ if (!empty($_POST['email']) AND !empty($_POST['password'])){
             $_SESSION['firstname'] = $row['firstname_user'];
             $_SESSION['lastname'] = $row['lastname_user'];
             $_SESSION['email'] = $email;
-            $_SESSION['role'] = $row['id_role'];
-            $_SESSION['id'] = $row['id_user'];
+            $_SESSION['role_id'] = $row['id_role'];
+            $_SESSION['user_id'] = $row['id_user'];
             echo "success";
         }else{
             echo "Mot de passe incorrect! Veuillez réessayer";

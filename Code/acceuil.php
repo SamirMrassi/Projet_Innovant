@@ -20,7 +20,7 @@
     </header>
     <div class="grid-container">
         <a href="demande.php" class="grid-item">Faire une demande</a>
-        <a href="#" class="grid-item">Consulter les notifications</a>
+        <a href="notifications.php" class="grid-item">Consulter les notifications</a>
         <a href="#" class="grid-item">Consulter les conversations</a>
         <a href="#" class="grid-item">Consulter les tickets</a>
         <a href="#" class="grid-item">Modifier mes disponibilités</a>
