@@ -40,6 +40,8 @@ header {
   height: 50px;
   margin-left: 10px;
   cursor: pointer;
+  background-color: #ffb6c1;
+  border-radius: 45px;
 }
 
 .grid-container {
