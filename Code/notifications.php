@@ -24,19 +24,45 @@ session_start();
     // Simulating fetching demands from the database
     $role_id = $_SESSION['role_id'];
     $user_id = $_SESSION['user_id'];
-    $stmt = $conn->prepare("SELECT r.id_request, r.description, u.firstname_user, u.lastname_user
+    $stmt = $conn->prepare("SELECT r.request_status, r.id_request, r.description, u.id_role, u.firstname_user, u.lastname_user
                               FROM requests AS r
                               JOIN users AS u ON r.id_user = u.id_user
-                              WHERE r.id_role = ? AND r.id_user != ?");
+                              WHERE r.request_status = 2 AND r.id_role = ? AND r.id_user != ?");
     $stmt->bind_param("ii", $role_id, $user_id);
     $stmt->execute();
     $requests_list = $stmt->get_result();
+
+    // fetching the roles table (to display role_name in each ticket)
+    $stmt = $conn->prepare("SELECT id_role, name_role FROM roles");
+    $stmt->execute();
+    $roles_list = $stmt->get_result();
+
+    // if the "accept request"-button is clicked:
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+      $requestId = $_POST['id'];
+
+      // Update query
+      $stmt = $conn->prepare("UPDATE requests SET request_status = '1' WHERE id_request = ?");
+      $stmt->bind_param("i", $requestId);
+      if ($stmt->execute()) {
+        echo "success";
+      } else {
+        echo "error";
+      }
+    }
   ?>
     <div class="grid">
-      <?php foreach ($requests_list as $request): ?>
+      <?php foreach ($requests_list as $request):
+                $rolename = $request['id_role'];
+                foreach($roles_list as $role){
+                    if ($role['id_role'] == $request['id_role']){
+                        $rolename = $role['name_role']; break;
+                    }
+                }
+        ?>
         <div class="request">
             <div class="request-id"><?php echo "Ticket-ID : " . $request['id_request']; ?></div>
-            <div class="username"><?php echo "From : " . $request['firstname_user'] . " " . $request['lastname_user'] ?></div>
+            <div class="username"><?php echo "Provenant de : " . $request['firstname_user'] . " " . $request['lastname_user'] . " ( " . $rolename . " )" ?></div>
             <div class="text"><?php echo $request['description']; ?></div>
         </div>
       <?php endforeach; ?>
@@ -56,10 +82,11 @@ session_start();
     </div>
 
     <script>
+         let popupRequestId;
       // Function to open the popup and populate its content
       function openPopup(request) {
         const popupContainer = document.getElementById('popup-container');
-        const popupRequestId = document.getElementById('popup-request-id');
+        popupRequestId = document.getElementById('popup-request-id');
         const popupUsername = document.getElementById('popup-username');
         const popupText = document.getElementById('popup-text');
 
@@ -96,7 +123,31 @@ session_start();
         // Add your logic to handle accepting the request here
         const popupContainer = document.getElementById('popup-container');
         popupContainer.style.display = 'none';
+        const request = {
+          id: popupRequestId,
+          // ...
+        };
+
+        // Send AJAX request to update_request.php
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '', true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+            if (xhr.responseText === 'success') {
+              console.log('Request accepted and updated in the database.');
+              const popupContainer = document.getElementById('popup-container');
+              popupContainer.style.display = 'none';
+            } else {
+              console.error('Error updating request in the database.');
+            }
+          }
+        };
+        xhr.send(request);
+
       });
+
+
     </script>
 
 </body>
