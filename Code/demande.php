@@ -48,6 +48,7 @@
     </div>
 
     <script>
+    document.addEventListener("DOMContentLoaded", function() {
         const itemSelect = document.getElementById("role");
         const selectedItemsContainer = document.getElementById("selectedItems");
         const selectedItems = new Set(); // To keep track of selected items
@@ -73,13 +74,13 @@
                     });
 
                     selectedItemsContainer.appendChild(newItemElement);
-                    itemSelect.value = "";
+                    //itemSelect.value = "";
                 }
             }
         });
 
         sendRequestButton.addEventListener("click", function () {
-            const textInput = document.getElementById("text-input").value.trim();
+            const textInput = document.getElementById("text-input").value;
             
             if (selectedItems.size === 0) {
                 alert("Veuillez choisir au moins un destinataire.");
@@ -91,7 +92,7 @@
                 // Create a data object to send via AJAX
                 const data = new FormData();
                 data.append("selectedRole", selectedRole);
-                //data.append("userInput", textInput);
+                data.append("userInput", textInput);
                 /*const data = {
                     selectedRole: selectedRole,
                     userInput: textInput
@@ -100,7 +101,6 @@
                 // Send the data to the server using AJAX
                 const xhr = new XMLHttpRequest();
                 xhr.open("POST", "process-request.php", true);
-                xhr.setRequestHeader("Content-Type", "application/json");
                 xhr.onreadystatechange = function () {
 
                     if (xhr.readyState === XMLHttpRequest.DONE) {
@@ -108,16 +108,13 @@
                             // La requête a été traitée avec succès, vous pouvez afficher la réponse
                             const response = xhr.responseText;
                             window.location.href = "acceuil.php";
-                            if (response === "success") {
-                                // Rediriger vers la page d'accueil
-                                
-                            } 
                         } else { console.error("Erreur lors de la requête AJAX"); }
                     }
                 };
                 xhr.send(data);
             }
         });
+    });
     </script>
 
   </body>
