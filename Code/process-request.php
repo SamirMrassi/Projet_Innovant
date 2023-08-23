@@ -4,8 +4,8 @@ require('./config.php');
 session_start();
 
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {   
-    // Récuperer l'id du role selectionné. 
+if (!empty($_POST['userInput']) AND !empty($_POST['selectedRole'])){
+     // Récuperer l'id du role selectionné. 
     $stmt = $conn->prepare("SELECT * FROM roles");
     $stmt->execute();
     $roles_list = $stmt->get_result();
@@ -18,11 +18,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     // Inserting the request data into the DB.
     $stmt = $conn->prepare("INSERT INTO requests (description, request_status, id_role, id_user) VALUES (?,?,?,?)");
-    $userInput = "baaa3";
-    $userId = $_SESSION["id"];
+    $userInput = $_POST['userInput'];
+    $userId = $_SESSION["user_id"];
     $requestStatus = 2;
     $stmt->bind_param("siii", $userInput, $requestStatus, $selectedRole, $userId);
     $stmt->execute();
-    echo "success";
 }
 ?>

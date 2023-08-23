@@ -36,20 +36,6 @@ session_start();
     $stmt = $conn->prepare("SELECT id_role, name_role FROM roles");
     $stmt->execute();
     $roles_list = $stmt->get_result();
-
-    // if the "accept request"-button is clicked:
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-      $requestId = $_POST['id'];
-
-      // Update query
-      $stmt = $conn->prepare("UPDATE requests SET request_status = '1' WHERE id_request = ?");
-      $stmt->bind_param("i", $requestId);
-      if ($stmt->execute()) {
-        echo "success";
-      } else {
-        echo "error";
-      }
-    }
   ?>
     <div class="grid">
       <?php foreach ($requests_list as $request):
@@ -60,8 +46,9 @@ session_start();
                     }
                 }
         ?>
-        <div class="request">
-            <div class="request-id"><?php echo "Ticket-ID : " . $request['id_request']; ?></div>
+        <div class="request">   
+            <div class="request-id-title"><?php echo "Ticket-ID"; ?></div>
+            <div class="request-id"><?php echo $request['id_request']; ?></div>
             <div class="username"><?php echo "Provenant de : " . $request['firstname_user'] . " " . $request['lastname_user'] . " ( " . $rolename . " )" ?></div>
             <div class="text"><?php echo $request['description']; ?></div>
         </div>
@@ -82,80 +69,68 @@ session_start();
     </div>
 
     <script>
-         let popupRequestId;
-      // Function to open the popup and populate its content
-      function openPopup(request) {
-        const popupContainer = document.getElementById('popup-container');
-        popupRequestId = document.getElementById('popup-request-id');
-        const popupUsername = document.getElementById('popup-username');
-        const popupText = document.getElementById('popup-text');
+        document.addEventListener("DOMContentLoaded", function() {
+          const popupContainer = document.getElementById('popup-container');
+          const popupRequestId = document.getElementById('popup-request-id');
+          const popupUsername = document.getElementById('popup-username');
+          const popupText = document.getElementById('popup-text');      
+          let selectedRequest = null;
+          function openPopup(request) {
+            popupRequestId.textContent = request.id;
+            popupUsername.textContent = request.username;  
+            popupText.textContent = request.text;
 
-        popupRequestId.textContent = request.id;
-        popupUsername.textContent = request.username;
-        popupText.textContent = request.text;
-
-        popupContainer.style.display = 'block';
-      }
-
-      // Event listeners for request squares
-      const requestSquares = document.querySelectorAll('.request');
-      requestSquares.forEach(square => {
-        square.addEventListener('click', () => {
-          const request = {
-            id: square.querySelector('.request-id').textContent,
-            username: square.querySelector('.username').textContent,
-            text: square.querySelector('.text').textContent
-          };
-          openPopup(request);
-        });
-      });
-
-      // Event listener for popup close button
-      const popupClose = document.getElementById('popup-close');
-      popupClose.addEventListener('click', () => {
-        const popupContainer = document.getElementById('popup-container');
-        popupContainer.style.display = 'none';
-      });
-
-      // Event listener for "Accept request" button
-      const acceptButton = document.getElementById('accept-button');
-      acceptButton.addEventListener('click', () => {
-        // Add your logic to handle accepting the request here
-        const popupContainer = document.getElementById('popup-container');
-        popupContainer.style.display = 'none';
-        const request = {
-          id: popupRequestId,
-          // ...
-        };
-
-        // Send AJAX request to update_request.php
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', '', true);
-        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        xhr.onreadystatechange = function () {
-          if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-            if (xhr.responseText === 'success') {
-              console.log('Request accepted and updated in the database.');
-              const popupContainer = document.getElementById('popup-container');
-              popupContainer.style.display = 'none';
-            } else {
-              console.error('Error updating request in the database.');
-            }
+            popupContainer.style.display = 'block';
           }
-        };
-        xhr.send(request);
 
-      });
+          // Event listeners for request squares
+          const requestSquares = document.querySelectorAll('.request');
+          requestSquares.forEach(square => {
+            square.addEventListener('click', () => {
+              selectedRequest  = {
+                id: square.querySelector('.request-id').textContent,
+                username: square.querySelector('.username').textContent,
+                text: square.querySelector('.text').textContent
+              };
+              openPopup(selectedRequest);
+            });
+          });
 
+          // Event listener for popup close button
+          const popupClose = document.getElementById('popup-close');
+          popupClose.addEventListener('click', () => {
+            popupContainer.style.display = 'none';
+          });
+
+          // Event listener for "Accept request" button
+          const acceptButton = document.getElementById('accept-button');
+          acceptButton.addEventListener('click', () => {
+            // Add your logic to handle accepting the request here
+            if (selectedRequest){
+                console.log("Selected request:", selectedRequest);
+                popupContainer.style.display = 'none';
+                const data = new FormData();
+                data.append("popupRequestId", selectedRequest.id);
+                console.log("FormData:", data); 
+
+                // Send AJAX request to update_request.php
+                const xhr = new XMLHttpRequest();
+                xhr.open("POST", "accepted_request.php", true);
+                xhr.onreadystatechange = function () {
+                  if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                      console.log('Request accepted and updated in the database.');
+                      window.location.href = "notifications.php";
+                    } else {
+                      console.error('Error updating request in the database.');
+                  }
+                };
+                xhr.send(data);
+            }
+          });
+
+        });
 
     </script>
-
-</body>
-</html>
-
-
-</body>
-</html>
 
 </body>
 </html>
