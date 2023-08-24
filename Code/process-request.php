@@ -16,7 +16,7 @@ if (!empty($_POST['userInput']) AND !empty($_POST['selectedRole'])){
                 break;
             }
     }
-    // Inserting the request data into the DB.
+    // Insérer la demande dans la bd.
     $stmt = $conn->prepare("INSERT INTO requests (description, request_status, id_role, id_user) VALUES (?,?,?,?)");
     $userInput = $_POST['userInput'];
     $userId = $_SESSION["user_id"];
