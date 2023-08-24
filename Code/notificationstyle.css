@@ -146,7 +146,7 @@ header {
   min-height: auto;
   margin-top: 20px;
   padding: 10px;
-  //border-radius: 10px;
+  border-radius: 10px;
   border: solid #ffb6c1;
   box-shadow: 2px 3px 3px 3px #ffb6c1;
   color: #24292e;
