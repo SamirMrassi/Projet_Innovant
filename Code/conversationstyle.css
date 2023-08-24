@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite&family=Yatra+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+body {
+  background-image: linear-gradient(60deg, #24292e 0%, #3b434d 100%);
+  min-height: 95vh;
+  min-width: 250px;
+  font-style: none;
+  font-size: 1rem;
+  font-family: 'Roboto', sans-serif;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  border-bottom: 2px solid #ffb6c1;
+  padding: 10px;
+  height: 50px;
+}
+
+.title {
+  flex: 1;
+  letter-spacing: 3px;
+  font-size: 2.8rem;
+  text-shadow: 6px 6px 16px #00000042;
+  color: #ffb6c1;
+  font-family: 'Yatra One', cursive;
+}
+
+.line {
+  width: 2px;
+  height: 100%;
+  background-color: #ffb6c1;
+  margin: 0 10px;
+}
+
+.image {
+  width: 50px;
+  height: 50px;
+  margin-left: 10px;
+  cursor: pointer;
+  background-color: #ffb6c1;
+  border-radius: 45px;
+}
+
+.container {
+    display: flex;
+    min-height: 80vh; 
+    margin-top: 20px;
+    border: none; 
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(255, 182, 193, 0.7); 
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.conversations {
+    width: 25%;
+    overflow: hidden;
+}
+
+.selected-conversation {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.messages {
+    flex: 1;
+    overflow: hidden;
+    padding: 10px;
+}
+
+.input-area {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #f0f0f0;
+}
+
+#message-input {
+    flex: 1;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+#send-button {
+    margin-left: 10px;
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
