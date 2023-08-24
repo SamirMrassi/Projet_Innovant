@@ -64,11 +64,22 @@
 	    </div>
 		<script>
 			document.addEventListener("DOMContentLoaded", function() {
+				
 				const conversations = document.querySelector(".conversations");
 				const messages = document.querySelector(".messages");
 				const messageInput = document.getElementById("message-input");
 				const sendButton = document.getElementById("send-button");
-
+				const requestSquares = document.querySelectorAll('.request');
+            	requestSquares.forEach(square => {
+					square.addEventListener('click', () => {
+					selectedRequest  = {
+						id: square.querySelector('.request-id').textContent,
+						username: square.querySelector('.username').textContent,
+						text: square.querySelector('.text').textContent
+					};
+					openPopup(selectedRequest);
+					});
+            	});
 				// Add event listener to conversation blocks to load selected conversation
 				conversations.addEventListener("click", function(event) {
 					if (event.target.classList.contains("conversation")) {
