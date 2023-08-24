@@ -57,25 +57,31 @@ header {
 .conversations {
     width: 25%;
     overflow: hidden;
+    margin : 5px;
+    border: 2px solid #ffb6c1;
+
 }
 
 .selected-conversation {
     flex: 1;
     display: flex;
     flex-direction: column;
+    border: 2px solid #ffb6c1;
+    margin: 5px;
 }
 
 .messages {
     flex: 1;
     overflow: hidden;
     padding: 10px;
+    
 }
 
 .input-area {
     display: flex;
     align-items: center;
     padding: 10px;
-    background-color: #f0f0f0;
+        
 }
 
 #message-input {
@@ -91,4 +97,21 @@ header {
     color: white;
     border-radius: 5px;
     cursor: pointer;
+}
+
+.conversation_information{
+  background-color: #F5E8F3;
+  border: 2px solid #ffb6c1;
+  height: 100px;
+  }
+
+.conversation_information_request_id{
+  font-style: italic;
+  font-weight: bold;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.conversation_information_name_sender{
+  margin-top: 10px;;
 }
