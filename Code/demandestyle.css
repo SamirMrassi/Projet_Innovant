@@ -85,7 +85,7 @@ header {
     height: 250px;
     box-sizing: border-box;
     padding: 10px;
-    overflow: auto;
+    overflow: hidden;
     margin-top: 20px;
 }
 
