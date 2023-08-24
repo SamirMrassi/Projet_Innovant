@@ -1,3 +1,4 @@
+<!-- Page of notifications : Displays all the "demandes" that aren't accepted, and every "demande" in a popup-screen by click-->
 <?php
 require('./config.php');
 session_start();
@@ -20,23 +21,25 @@ session_start();
             <a href="index.php"><img class="image" src="ressources/deconnexion.png" title="Se déconnecter" alt="Image 1" ></a>
         </div>  
     </header>
-  <?php
-    // Simulating fetching demands from the database
-    $role_id = $_SESSION['role_id'];
-    $user_id = $_SESSION['user_id'];
-    $stmt = $conn->prepare("SELECT r.request_status, r.id_request, r.description, u.id_role, u.firstname_user, u.lastname_user
+    <?php
+        // fetching the "demandes" from the database
+        $role_id = $_SESSION['role_id'];
+        $user_id = $_SESSION['user_id'];
+        $stmt = $conn->prepare("SELECT r.request_status, r.id_request, r.description, u.id_role, u.firstname_user, u.lastname_user
                               FROM requests AS r
                               JOIN users AS u ON r.id_user = u.id_user
                               WHERE r.request_status = 2 AND r.id_role = ? AND r.id_user != ?");
-    $stmt->bind_param("ii", $role_id, $user_id);
-    $stmt->execute();
-    $requests_list = $stmt->get_result();
+        $stmt->bind_param("ii", $role_id, $user_id);
+        $stmt->execute();
+        $requests_list = $stmt->get_result();
 
-    // fetching the roles table (to display role_name in each ticket)
-    $stmt = $conn->prepare("SELECT id_role, name_role FROM roles");
-    $stmt->execute();
-    $roles_list = $stmt->get_result();
-  ?>
+        // fetching the "roles"-table (to display role_name in each ticket)
+        $stmt = $conn->prepare("SELECT id_role, name_role FROM roles");
+        $stmt->execute();
+        $roles_list = $stmt->get_result();
+    ?>
+
+    <!-- a div to display all "demandes" in a grid view -->
     <div class="grid">
       <?php foreach ($requests_list as $request):
                 $rolename = $request['id_role'];
@@ -55,9 +58,8 @@ session_start();
       <?php endforeach; ?>
     </div>
 
-    <!-- Your existing code -->
 
-    <!-- Hidden HTML structure for the popup content -->
+    <!-- Hidden HTML structure for the popup content, that will only be executed when we click on a "demande" -->
     <div id="popup-container" class="popup-container">
       <div class="popup-content">
         <span class="popup-close" id="popup-close">&times;</span>
@@ -70,67 +72,61 @@ session_start();
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-          const popupContainer = document.getElementById('popup-container');
-          const popupRequestId = document.getElementById('popup-request-id');
-          const popupUsername = document.getElementById('popup-username');
-          const popupText = document.getElementById('popup-text');      
-          let selectedRequest = null;
-          function openPopup(request) {
-            popupRequestId.textContent = request.id;
-            popupUsername.textContent = request.username;  
-            popupText.textContent = request.text;
+            const popupContainer = document.getElementById('popup-container');
+            const popupRequestId = document.getElementById('popup-request-id');
+            const popupUsername = document.getElementById('popup-username');
+            const popupText = document.getElementById('popup-text');      
+            let selectedRequest = null;
 
-            popupContainer.style.display = 'block';
-          }
+            // A function that reaches the css-variable "display" and change it from "none" to "block" in order to make the popup appear. 
+            function openPopup(request) {
+                popupRequestId.textContent = request.id;
+                popupUsername.textContent = request.username;  
+                popupText.textContent = request.text;
+                popupContainer.style.display = 'block';
+            }
 
-          // Event listeners for request squares
-          const requestSquares = document.querySelectorAll('.request');
-          requestSquares.forEach(square => {
-            square.addEventListener('click', () => {
-              selectedRequest  = {
-                id: square.querySelector('.request-id').textContent,
-                username: square.querySelector('.username').textContent,
-                text: square.querySelector('.text').textContent
-              };
-              openPopup(selectedRequest);
+            // Event listeners in every "demande" 
+            const requestSquares = document.querySelectorAll('.request');
+            requestSquares.forEach(square => {
+                square.addEventListener('click', () => {
+                  selectedRequest  = {
+                    id: square.querySelector('.request-id').textContent,
+                    username: square.querySelector('.username').textContent,
+                    text: square.querySelector('.text').textContent
+                  };
+                  openPopup(selectedRequest);
+                });
             });
-          });
 
-          // Event listener for popup close button
-          const popupClose = document.getElementById('popup-close');
-          popupClose.addEventListener('click', () => {
-            popupContainer.style.display = 'none';
-          });
-
-          // Event listener for "Accept request" button
-          const acceptButton = document.getElementById('accept-button');
-          acceptButton.addEventListener('click', () => {
-            // Add your logic to handle accepting the request here
-            if (selectedRequest){
-                console.log("Selected request:", selectedRequest);
+            // Event listener in popup close button
+            const popupClose = document.getElementById('popup-close');
+            popupClose.addEventListener('click', () => {
                 popupContainer.style.display = 'none';
-                const data = new FormData();
+            });
+
+            // Event listener in "Accept request" button
+            const acceptButton = document.getElementById('accept-button');
+            acceptButton.addEventListener('click', () => {
+                // Add your logic to handle accepting the request here
+                popupContainer.style.display = 'none';  // make the popup disappear
+                const data = new FormData();            // prepare the data to send to accepted_request.php
                 data.append("popupRequestId", selectedRequest.id);
-                console.log("FormData:", data); 
 
                 // Send AJAX request to update_request.php
                 const xhr = new XMLHttpRequest();
                 xhr.open("POST", "accepted_request.php", true);
                 xhr.onreadystatechange = function () {
-                  if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                      console.log('Request accepted and updated in the database.');
-                      window.location.href = "notifications.php";
+                    if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                        // if the php-script was executed successfully, refresh the page. 
+                        window.location.href = "notifications.php";
                     } else {
-                      console.error('Error updating request in the database.');
-                  }
+                        console.error('Error updating request in the database.');
+                    }
                 };
                 xhr.send(data);
-            }
-          });
-
+            });
         });
-
     </script>
-
-</body>
+  </body>
 </html>

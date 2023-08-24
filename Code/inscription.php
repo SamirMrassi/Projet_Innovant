@@ -1,3 +1,4 @@
+<!-- Inscription page -->
 <?php	require('./config.php'); ?>
 <!DOCTYPE html>
 <html>
@@ -9,9 +10,9 @@
 
 	<body>
 		<header>
-			<!-- <a href='index.php' > Page d'acceuil</a> -->
 			<a href="index.php" style="display: inline-block; padding: 10px 20px; background: linear-gradient(20deg, #24292e, #ffb6c1); color: white; text-decoration: none; border-radius: 5px;">Page d'accueil</a>
 		</header>
+
 		<h1> Virtu'Com </h1>
 		<form method="POST" class="inscription-form" action="">
 			<p> Prenom: <input type="text" name="firstname"></p>
@@ -21,6 +22,7 @@
 			<p> Rôle: <label for="role"></label>
 	       	 <select id="role" name="role" style="width: 200px;">
 			    <option value=""></option>
+			    <!-- An sql-request to get all roles from the database and display them as a list -->
             	<?php
 					$stmt = $conn->prepare("SELECT * FROM roles");
                 	$stmt->execute();
@@ -75,7 +77,6 @@
 				echo "<p style='color:red'>Veuillez compléter tous les champs!</p>";
 			}
 		}
-		//echo "<a href='index.php' > Page d'acceuil</a>";
 		?>
 		</form>
 	</body>
