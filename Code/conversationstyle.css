@@ -45,7 +45,7 @@ header {
 
 .container {
     display: flex;
-    min-height: 80vh; 
+    height: 80vh; 
     margin-top: 20px;
     border: none; 
     border-radius: 10px;
@@ -56,32 +56,75 @@ header {
 
 .conversations {
     width: 25%;
-    overflow: hidden;
+    overflow-y: scroll;
     margin : 5px;
-    border: 2px solid #ffb6c1;
+    border: 1px solid #ffb6c1;
+    border-radius: 5px 0px 0px 5px;
+}
 
+.conversation_information{
+    border-radius: 5px;
+    border: 1px solid green;
+    margin: 5px;
 }
 
 .selected-conversation {
     flex: 1;
     display: flex;
     flex-direction: column;
-    border: 2px solid #ffb6c1;
+    border: 1px solid #ffb6c1;
+    border-radius: 0px 5px 5px 0px;
     margin: 5px;
 }
 
-.messages {
+.actual-conversation {
     flex: 1;
-    overflow: hidden;
+    height: 100%;
     padding: 10px;
-    
+}
+
+.button-container{
+    display: none;
+    background-color: green;
+}
+
+.centered-create-button
+.centered-close-button{
+
+    margin: 10px;
+    border-radius: 5px 5px 5px 5px;
+    background: linear-gradient(20deg, #ffb6c1, #3b434d);
+}
+
+.messages{
+    display: none;
+    flex-direction: column;
+    overflow-y: scroll;
+    height: 75%;
+    gap: 10px;
+}
+
+.actual-message {
+    width: fit-content; /* Limit message width for better readability */
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.sender-message {
+    background-color: #DCF8C6; /* Color for messages sent by the sender */
+    margin-left: auto;
+    margin-right: 10px;
+}
+
+.receiver-message {
+    background-color: #F3F3F3; /* Color for messages received from the other party */
 }
 
 .input-area {
-    display: flex;
+    display: none;
     align-items: center;
     padding: 10px;
-        
+    margin-top: 10px;
 }
 
 #message-input {

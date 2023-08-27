@@ -55,7 +55,9 @@ CREATE TABLE IF NOT EXISTS messages (
     id_message INT AUTO_INCREMENT PRIMARY KEY,
     message_text TEXT,
     id_sender INT,
-    FOREIGN KEY (id_sender) REFERENCES users(id_user)
+    id_conversation INT,
+    FOREIGN KEY (id_sender) REFERENCES users(id_user), 
+    FOREIGN KEY (id_conversation) REFERENCES conversations(id_conversation)
 );
 
 -- Création de la table "priorities"
