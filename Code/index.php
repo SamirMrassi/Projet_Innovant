@@ -1,6 +1,6 @@
 <?php
     require('./config.php');
-    session_destroy();
+   // session_destroy();
 ?>
 
 <!DOCTYPE html>
@@ -13,6 +13,7 @@
             document.addEventListener("DOMContentLoaded", function() {
                 const transformButton = document.getElementById("transformButton");
                 const ConnexionForm = document.getElementById("ConnexionForm");
+                const flexContainer = document.querySelector(".flex-container");
 
                 transformButton.addEventListener("click", function() {
                     // Créer le formulaire
@@ -23,7 +24,7 @@
                         <input type="text" id="email" name="email"><br><br>
                         <label for="password">Mot de passe :</label><br>
                         <input type="password" id="password" name="password"><br><br>
-                        <input type="submit" value="se connecter">
+                        <input class="submit_button" type="submit" value="se connecter">
                         <p> Vous n'avez pas de compte?  <a href="inscription.php" > Inscrivez-vous!</a></p>                        
                     `;
 
@@ -72,7 +73,7 @@
                 
                     // Remplacer le bouton par le formulaire
                     ConnexionForm.innerHTML = "";
-                    ConnexionForm.appendChild(form);
+                    flexContainer.appendChild(form);
                 });
             });
 
@@ -80,12 +81,25 @@
     </head>
 
     <body>
-        <h1> Virtu'Com </h1>
-        <h4> Une communication d'équipe sans frontières ni retards : Virtu'Com réinvente la collaboration en se concentrant sur les rôles, pour des échanges toujours ciblés et en temps voulu. Avec Virtu'Com, dites adieu aux retards de communication ! </h4>
-        <br><br>
+        <header>
+            <div class="title">Virtu'Com</div>
+            <!-- SI C'EST UN PROJECT MANAGER; METTRE À DISPOSITION UNE PAGE DE CONFIGURATION DE L'ÈQUIPE. -->
+        </header>
 
-        <div id="ConnexionForm">
-            <button id="transformButton">Connexion</button>
-        </div>        
+        <div class="flex-container" id="flex-container">
+            <div class="div_left">
+                <h2> Comment rendre  <br>la communication plus productive<br> dans votre équipe ? <br> Nous avons la réponse. </h2>
+                <p> _____________________________ </p>
+                <p> Une communication d'équipe sans frontières ni retards : Virtu'Com réinvente la collaboration en se concentrant sur les rôles, pour des échanges toujours ciblés et en temps voulu. Avec Virtu'Com, dites adieu aux retards de communication ! </p>
+                <br><br>   
+                <div id="ConnexionForm">
+                   <button id="transformButton">Connexion</button> 
+                </div>   
+            </div>
+            <div class="div_right">
+                <img class="welcome_page_image"  id= "welcome_page_image" src="ressources/communication.png" > 
+            </div>
+        </div>
+        
     </body>
 </html>

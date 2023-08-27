@@ -1,49 +1,85 @@
 @import url('https://fonts.googleapis.com/css2?family=Special+Elite&family=Yatra+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
 
-body{
-	background-image: linear-gradient(60deg, #24292e 0%, #3b434d 100%);
+body {
+
 	min-height: 100vh;
+	min-width: 250px;
 	font-style: none;
 	font-size: 1rem;
 	font-family: 'Roboto', sans-serif;
 }
-
-h1 {
-  letter-spacing: 3px;
-  text-align: center;
-  margin-top: 30px;
-  font-size: 4.5rem;
-  text-shadow: 6px 6px 16px #00000042;
-  color: #ffb6c1;
-  font-family: 'Yatra One', cursive;
+  
+header {
+	background-image: linear-gradient(60deg, #24292e 0%, #3b434d 100%);
+	display: flex;
+	align-items: center;
+	padding: 10px;
+	height: 60px;
+}
+  
+.title {
+	flex: 1;
+	letter-spacing: 3px;
+	font-size: 2.8rem;
+	text-shadow: 6px 6px 16px #00000042;
+	color: white;
+	font-family: 'Open Sans', sans-serif;
+}
+  
+.connexion_button {
+	width: 50px;
+	height: 50px;
+	margin-left: 10px;
+	background-color: white;
+	cursor: pointer;
+	border-radius: 45px;
+	
 }
 
-h4{
-	width: 70%;
-	min-height: 150px;
-	margin : 0 auto;
-	font-size: 2.2rem;
+.div_gauche{
+	margin-top: 20px; 
 	text-align: center;
-	color: #FFE8F3;
-	font-family: 'Caveat', cursive;
+	font-style: bold;
+	color: #24292e;
+	font-family: 'ADLaM Display', cursive;
+	max-width: 50%;
+
+}
+  
+h2{
+	width: 500px;
+	margin-top: 112px;
+	margin-bottom: 40px;
+	margin-left: 60px;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 45px;
+	font-style: normal;
 }
 
-div{
-	margin : 0 auto;
-	width : 30%;
-	min-width: 300px;
-	margin-top: 50px;
+p{
+	width: 500px;
+	margin-top: 40px;
+	margin-bottom: 40px;
+	margin-left: 60px;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 18px;
 }
+
 
 #transformButton{
-	border-radius: 12px;
-	background-color: #f7f5ed;
+	background-color:#24292e;
 	padding: 12px 28px;
 	font-size: 20px;
+	border:#24292e;
 	display: block;
-  margin : auto;
+  	margin : auto;
+	margin-left: 60px;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 18px;
+	color: white;
 }
 
 #transformButton:hover {
@@ -51,12 +87,12 @@ div{
 }
 
 .connection-form {
-  background-color: #FFF2FD;
- 	border: 2px solid #ccc;
-	border-radius: 10px 10px 10px 10px;
+  background-color: white; 
+  border: 2px solid #24292e;
   padding: 20px;
   margin: 20px;
   text-align: center;
+  box-shadow: #3b434d;
 }
 
 .connection-form label,
@@ -72,8 +108,9 @@ div{
 }
 
 .connection-form input[type="submit"]{
-	background-color: #85888F;
-	width: 50%;
+	background-color: #24292e;
+	width: 30%;
+	color: white;
 }
 
 .error-message{
@@ -83,3 +120,26 @@ div{
 	text-align: center; 
   min-width: 100%;
 }
+.flex-container {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 20px; 
+}
+
+.div_left {
+    flex: 1; 
+    padding: 20px; 
+}
+
+.div_right {
+    flex: 1; 
+    padding: 20px; 
+    text-align: right; 
+}
+
+.welcome_page_image {
+    max-width: 100%;
+    height: auto; 
+}
+

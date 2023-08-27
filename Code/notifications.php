@@ -112,7 +112,7 @@ session_start();
                 popupContainer.style.display = 'none';  // make the popup disappear
                 const data = new FormData();            // prepare the data to send to accepted_request.php
                 data.append("popupRequestId", selectedRequest.id);
-
+                
                 // Send AJAX request to update_request.php
                 const xhr = new XMLHttpRequest();
                 xhr.open("POST", "accepted_request.php", true);
