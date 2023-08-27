@@ -1,6 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Special+Elite&family=Yatra+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
+
+html, body{
+	height: 100%;
+    margin: 0;
+    padding: 0;
+}
 
 body {
 
@@ -8,7 +15,7 @@ body {
   min-width: 250px;
   font-style: none;
   font-size: 1rem;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Open Sans', sans-serif;
 }
 
 header {
@@ -71,7 +78,7 @@ header {
 }
 
 .grid-item:hover{
-  background:blue;
+  background:#B0B0B0;
 }
 
 .popup-container {

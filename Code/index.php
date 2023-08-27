@@ -95,6 +95,7 @@
                 <div id="ConnexionForm">
                    <button id="transformButton">Connexion</button> 
                 </div>   
+                
             </div>
             <div class="div_right">
                 <img class="welcome_page_image"  id= "welcome_page_image" src="ressources/communication.png" > 

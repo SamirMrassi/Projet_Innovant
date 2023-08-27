@@ -1,43 +1,146 @@
 @import url('https://fonts.googleapis.com/css2?family=Special+Elite&family=Yatra+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
 
-body{
-	background-image: linear-gradient(60deg, #24292e 0%, #3b434d 100%);
+html, body{
+	height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
 	min-height: 100vh;
+	min-width: 250px;
 	font-style: none;
 	font-size: 1rem;
 	font-family: 'Roboto', sans-serif;
 }
 
-h1 {
-  letter-spacing: 3px;
-  text-align: center;
-  margin-top: 30px;
-  font-size: 4.5rem;
-  text-shadow: 6px 6px 16px #00000042;
-  color: #ffb6c1;
-  font-family: 'Yatra One', cursive;
+header {
+	background-image: linear-gradient(60deg, #24292e 0%, #3b434d 100%);
+	display: flex;
+	align-items: center;
+	padding: 10px;
+	height: 60px;
+}
+
+.title {
+	flex: 1;
+	letter-spacing: 3px;
+	font-size: 2.8rem;
+	text-shadow: 6px 6px 16px #00000042;
+	color: white;
+	font-family: 'Open Sans', sans-serif;
+}
+
+h2{
+	width: 500px;
+	margin-top: 112px;
+	margin-bottom: 40px;
+	margin-left: 60px;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 45px;
+	font-style: normal;
+}
+
+p{
+	width: 500px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-left: 60px;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 18px;
 }
 
 .inscription-form{
-	background-color: #FFF2FD;
-	border: 2px solid #ccc;
-	border-radius: 10px 10px 10px 10px;
-  text-align: center;
-	margin : 0 auto;
-	width : 35%;
-	min-width: 300px;
-	margin-top: 80px;
+	background-color: white; 
+  	margin-top: 20px;
+  	padding: 20px;
+  	margin: 100px 20px 20px 20px;
+	text-align: left;
+	box-shadow: #3b434d;
 }
 
 .inscription-form select,
 .inscription-form input {
-	border: 1px solid #ccc;
-	border-radius: 10px 10px 10px 10px;
+	width: 70%;
+	padding: 5px;
+	
 }
 
 .inscription-form input[type="submit"]{
-	background-color: #85888F;
+	background-color: #24292e;
 	width: 30%;
-	margin-top: 20px;
+	color: white;
+	margin-top: 10px;
+}
+
+.flex-container {
+    display: flex;
+    align-items: center; /* Alignement vertical au centre */
+    padding: 20px;
+}
+
+.inscription_text {
+    flex: 1; /* Prend autant d'espace que nécessaire */
+    padding: 20px;
+}
+
+.inscription_form {
+    flex: 1; /* Prend autant d'espace que nécessaire */
+    padding: 20px;
+    text-align: center; /* Alignement horizontal au centre */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.robot{
+	width: 300px;
+	height: 370px;
+}
+
+.return{
+	background-color:white;
+	padding: 10px 10px;
+	font-size: 20px;
+	text-decoration: none;
+	border:white;
+	display: block;
+  	margin : auto;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 15px;
+	color: #24292e;
+}
+
+.footer {
+    padding: 20px;
+    text-align: center;
+    position: sticky;
+    bottom: 0;
+	margin-top: 150px;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between; /* Espacement égal entre les éléments */
+    width: 100%; /* Ajustez la largeur maximale selon vos besoins */
+    margin-left: 1px; /* Centrer le contenu horizontalement */
+}
+
+.footer-item {
+    flex: 1; /* Prend autant d'espace que nécessaire */
+    padding: 10px;
+}
+
+.footer-item img {
+    max-width: 30px; /* Ajustez la taille de l'icône selon vos besoins */
+    margin-right: 10px; /* Espacement à droite de l'icône */
+}
+
+.footer_text{
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-left: 0px;
+	margin-right: 0px;
 }
