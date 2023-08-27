@@ -17,8 +17,8 @@ session_start();
         <!-- SI C'EST UN PROJECT MANAGER; METTRE À DISPOSITION UNE PAGE DE CONFIGURATION DE L'ÈQUIPE. -->
         <div class="line"></div>
         <div class="images">
-            <a href="acceuil.php"><img class="image" src="ressources/menu.png" title="Menu" alt="Image 2" ></a>
-            <a href="index.php"><img class="image" src="ressources/deconnexion.png" title="Se déconnecter" alt="Image 1" ></a>
+            <img class="image"  id= "bouton_disponibilite"src="ressources/cocher.png" title="Cocher" alt="Image 1" >
+            <a href="index.php"><img class="image" src="ressources/deconnexion.png" title="Se déconnecter" alt="Image 1" ></a>        
         </div>  
     </header>
     <?php
