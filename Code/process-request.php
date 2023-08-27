@@ -4,7 +4,7 @@ require('./config.php');
 session_start();
 
 
-if (!empty($_POST['userInput']) AND !empty($_POST['selectedRole'])){
+if (!empty($_POST['userInput']) AND !empty($_POST['selectedRole']) AND !empty($_POST['object'])) {
      // Récuperer l'id du role selectionné. 
     $stmt = $conn->prepare("SELECT * FROM roles");
     $stmt->execute();
@@ -17,11 +17,12 @@ if (!empty($_POST['userInput']) AND !empty($_POST['selectedRole'])){
             }
     }
     // Insérer la demande dans la bd.
-    $stmt = $conn->prepare("INSERT INTO requests (description, request_status, id_role, id_user) VALUES (?,?,?,?)");
+    $stmt = $conn->prepare("INSERT INTO requests (description, request_status, id_role, id_user, object_text) VALUES (?,?,?,?)");
     $userInput = $_POST['userInput'];
+    $object = $_POST['object'];
     $userId = $_SESSION["user_id"];
     $requestStatus = 2;
-    $stmt->bind_param("siii", $userInput, $requestStatus, $selectedRole, $userId);
+    $stmt->bind_param("siii", $userInput, $requestStatus, $selectedRole, $userId, $object);
     $stmt->execute();
 }
 ?>

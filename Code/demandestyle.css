@@ -89,6 +89,14 @@ header {
     margin-top: 20px;
 }
 
+#object-input{
+  width: 100%;
+  padding: 5px;
+  resize: none;
+  background-color: white;
+  margin-right: 5px;
+}
+
 #text-input {
     width: 100%;
     height: 100%;
