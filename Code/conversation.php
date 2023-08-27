@@ -42,7 +42,7 @@
 					foreach($conversation_list as $conv){
 
 
-						$stmt = $conn->prepare("SELECT u.firstname_user, u.lastname_user, r.name_role
+						$stmt = $conn->prepare("SELECT req.object_text, u.firstname_user, u.lastname_user, r.name_role
 												FROM users u
 												INNER JOIN requests req ON u.id_user = req.id_user
 												INNER JOIN roles r ON r.id_role = req.id_role
@@ -55,8 +55,10 @@
 						echo '<div class="invisible_div_userID" style="display:none;">' . $_SESSION['user_id'] . '</div>';
 						echo '<div class="invisible_div_username" style="display:none;">' . $_SESSION['firstname'] . ' ' . $_SESSION['lastname'] . '</div>';
 						echo '<div class="conversation_information_request_id">' . $conv["id_request"] . '</div>';
-						foreach($sender_receiver_info as $info)
+						foreach($sender_receiver_info as $info){
 							echo '<div class="conversation_information_name_sender conv-info-text"> De <strong>' . $info["firstname_user"] . ' ' . $info['lastname_user'] . ' </strong> vers le rôle <strong>' . $info['name_role'] . '</strong> </div>';
+							echo '<div class="conversation_information_name_sender conv-info-text"> <strong>Object: </strong>' . $info["object_text"] . '</div>';
+						}
 						echo ' </div>';
 					}
 

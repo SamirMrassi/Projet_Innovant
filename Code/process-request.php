@@ -17,12 +17,12 @@ if (!empty($_POST['userInput']) AND !empty($_POST['selectedRole']) AND !empty($_
             }
     }
     // Insérer la demande dans la bd.
-    $stmt = $conn->prepare("INSERT INTO requests (description, request_status, id_role, id_user, object_text) VALUES (?,?,?,?)");
+    $stmt = $conn->prepare("INSERT INTO requests (description, request_status, id_role, id_user, object_text) VALUES (?,?,?,?,?)");
     $userInput = $_POST['userInput'];
     $object = $_POST['object'];
     $userId = $_SESSION["user_id"];
     $requestStatus = 2;
-    $stmt->bind_param("siii", $userInput, $requestStatus, $selectedRole, $userId, $object);
+    $stmt->bind_param("siiis", $userInput, $requestStatus, $selectedRole, $userId, $object);
     $stmt->execute();
 }
 ?>
