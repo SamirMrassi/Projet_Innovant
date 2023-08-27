@@ -26,12 +26,12 @@
 	        	<?php
 					$stmt = $conn->prepare("SELECT c.id_conversation, c.id_responsible, c.id_request
 											FROM conversations c
-											WHERE c.id_responsible = ?
+											WHERE (c.id_responsible = ?
 											OR c.id_request IN (
 											    SELECT r.id_request
 											    FROM requests r
 											    WHERE r.id_user = ?
-											) OR c.id_request IN (SELECT r.id_request FROM requests r WHERE r.id_role=?); ");
+											) OR c.id_request IN (SELECT r.id_request FROM requests r WHERE r.id_role=?)) AND c.id_request IN (SELECT r.id_request FROM requests r WHERE r.request_status = 1); ");
 					$stmt->bind_param("iii", $_SESSION['user_id'], $_SESSION['user_id'], $_SESSION['role_id'] );
 					$stmt->execute();
 					$conversation_list = $stmt->get_result();
@@ -40,12 +40,23 @@
 	            		echo "<p> Vous n'avez aucune conversation ouverte à afficher.</p>";
 	            	}
 					foreach($conversation_list as $conv){
+
+
+						$stmt = $conn->prepare("SELECT u.firstname_user, u.lastname_user, r.name_role
+												FROM users u
+												INNER JOIN requests req ON u.id_user = req.id_user
+												INNER JOIN roles r ON r.id_role = req.id_role
+												WHERE req.id_request = ?;");
+						$stmt->bind_param("i", $conv['id_request']);
+						$stmt->execute();
+						$sender_receiver_info = $stmt->get_result();
 						echo '<div class="conversation_information"> ';
 						echo '<div class="invisible_div" style="display:none;"> ' . $conv["id_conversation"] . ' </div>';
 						echo '<div class="invisible_div_userID" style="display:none;">' . $_SESSION['user_id'] . '</div>';
 						echo '<div class="invisible_div_username" style="display:none;">' . $_SESSION['firstname'] . ' ' . $_SESSION['lastname'] . '</div>';
 						echo '<div class="conversation_information_request_id">' . $conv["id_request"] . '</div>';
-						echo '<div class="conversation_information_name_sender"> Envoyé par: ' . $conv["firstname_user"] . ' ' . $conv['lastname_user'] .' </div>';
+						foreach($sender_receiver_info as $info)
+							echo '<div class="conversation_information_name_sender conv-info-text"> De <strong>' . $info["firstname_user"] . ' ' . $info['lastname_user'] . ' </strong> vers le rôle <strong>' . $info['name_role'] . '</strong> </div>';
 						echo ' </div>';
 					}
 
@@ -56,6 +67,15 @@
 					   $id_sender = $_SESSION["user_id"];
 					   $id_conversation = $_POST['conversation-id'];
 					   $stmt->bind_param("sii", $message_text, $id_sender, $id_conversation);
+					   $stmt->execute();
+				   }
+
+				   // If change status request was trigerred
+				   if (!empty($_POST['conv-id'])){
+				   	   $stmt = $conn->prepare("UPDATE requests SET request_status = 3
+												WHERE id_request = (SELECT id_request FROM conversations WHERE id_conversation = 1);");
+					   $conversationID = $_POST['conv-id'];
+					   $stmt->bind_param("i", $conversationID);
 					   $stmt->execute();
 				   }
 				?>
@@ -149,7 +169,20 @@
 				        xhr.send(data);
 
 				        //Add eventlistener for closing a request if this user has created it
-				        
+				        changeStatus.addEventListener('click', () => {
+				        	// Send the data to the server using AJAX
+							const xhr = new XMLHttpRequest();
+							xhr.open("POST", "", true);
+							xhr.onreadystatechange = function () {
+
+								if (xhr.readyState === XMLHttpRequest.DONE) {
+									if (xhr.status === 200) {
+										window.location.href = "conversation.php";
+									} else { console.error("Erreur lors de la requête AJAX"); }
+								}
+	                    	};
+	                		xhr.send(data);
+				        });
 					});
             	});
 

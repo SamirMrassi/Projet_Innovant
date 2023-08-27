@@ -157,5 +157,9 @@ header {
 }
 
 .conversation_information_name_sender{
-  margin-top: 10px;;
+  margin-top: 10px;
+}
+
+.conv-info-text{
+    font-size: 3px;
 }
