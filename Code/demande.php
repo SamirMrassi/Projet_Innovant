@@ -41,6 +41,7 @@
     </div>
 
     <div class="container">
+        <textarea id="object-input" placeholder="Object..."></textarea>
         <textarea id="text-input" placeholder="Start typing..."></textarea>
     </div>
     <div class="send-button"> 
@@ -79,9 +80,12 @@
         // Add eventlistenenr to the sendRequestButton. This should trigger a php-script that adds the new request in the database.
         sendRequestButton.addEventListener("click", function () {
             const textInput = document.getElementById("text-input").value;
+            const objectInput = document.getElementById("object-input").value;
             
             if (selectedItems.size === 0) {                                         // if no role-receiver was chosen
                 alert("Veuillez choisir au moins un destinataire.");
+            } else if(objectInput === ""){
+                alert("Votre demande doit impérativement avoir un Objet");
             } else if (textInput === "") {                                          // if no text for the request was written
                 alert("Votre demande doit être rédigée avant d'être envoyée.");
             } else {                                                                // else, create the new "demande" in the database
@@ -90,6 +94,7 @@
                 const data = new FormData();
                 data.append("selectedRole", selectedRole);
                 data.append("userInput", textInput);
+                data.append("object", objectInput);
 
                 // Send the data to the server using AJAX
                 const xhr = new XMLHttpRequest();
