@@ -72,20 +72,22 @@ header {
   transform: scale(1.07); /* Increase size on hover */
 }
 
-/* Styles for demand content */
-.request-id {
+.request-box{
   font-weight: bold;
+  font-style: italic;
   font-size: 14px;
   text-align: center;
   background-color: #83c6d2;
   border-radius: 2px 2px 2px 2px;
   font-family: 'Open Sans', sans-serif;
+
 }
 
 .username {
-  font-size: 18px;
+  font-size: 10px;
   font-weight: bold;
   margin-top: 20px;
+  font-style: bold;
   font-family: 'Open Sans', sans-serif;
 }
 

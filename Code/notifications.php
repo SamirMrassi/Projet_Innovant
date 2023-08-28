@@ -25,7 +25,7 @@ session_start();
         // fetching the "demandes" from the database
         $role_id = $_SESSION['role_id'];
         $user_id = $_SESSION['user_id'];
-        $stmt = $conn->prepare("SELECT r.request_status, r.id_request, r.description, u.id_role, u.firstname_user, u.lastname_user
+        $stmt = $conn->prepare("SELECT r.object_text, r.request_status, r.id_request, r.description, u.id_role, u.firstname_user, u.lastname_user
                               FROM requests AS r
                               JOIN users AS u ON r.id_user = u.id_user
                               WHERE r.request_status = 2 AND r.id_role = ? AND r.id_user != ?");
@@ -50,10 +50,13 @@ session_start();
                 }
         ?>
         <div class="request">   
-            <div class="request-id-title"><?php echo "Ticket-ID"; ?></div>
-            <div class="request-id"><?php echo $request['id_request']; ?></div>
+            <div class="request-box">
+                <div class="request-id-title"><?php echo "Demande Nr. "; ?></div>
+                <div class="request-id"><?php echo $request['id_request']; ?></div>
+            </div>
             <div class="username"><?php echo "Provenant de : " . $request['firstname_user'] . " " . $request['lastname_user'] . " ( " . $rolename . " )" ?></div>
-            <div class="text"><?php echo $request['description']; ?></div>
+            <div class="object"><?php echo "<strong>Objet : </strong>" . $request['object_text']; ?></div>
+            <div class="invisible_div" style="display:none;"><?php echo ""  . $request['description']; ?></div> 
         </div>
       <?php endforeach; ?>
     </div>
@@ -65,6 +68,7 @@ session_start();
         <span class="popup-close" id="popup-close">&times;</span>
         <div class="popup-request-id" id="popup-request-id"></div>
         <div class="popup-username" id="popup-username"></div>
+        <div class="popup-object" id="popup-object"></div>
         <div class="popup-text" id="popup-text"></div>
         <button class="accept-button" id="accept-button">Accept request</button>
       </div>
@@ -75,6 +79,7 @@ session_start();
             const popupContainer = document.getElementById('popup-container');
             const popupRequestId = document.getElementById('popup-request-id');
             const popupUsername = document.getElementById('popup-username');
+            const popupObject = document.getElementById('popup-object');
             const popupText = document.getElementById('popup-text');      
             let selectedRequest = null;
 
@@ -82,6 +87,7 @@ session_start();
             function openPopup(request) {
                 popupRequestId.textContent = request.id;
                 popupUsername.textContent = request.username;  
+                popupObject.textContent = request.object;
                 popupText.textContent = request.text;
                 popupContainer.style.display = 'block';
             }
@@ -93,7 +99,8 @@ session_start();
                   selectedRequest  = {
                     id: square.querySelector('.request-id').textContent,
                     username: square.querySelector('.username').textContent,
-                    text: square.querySelector('.text').textContent
+                    object: square.querySelector('.object').textContent,
+                    text: square.querySelector('.invisible_div').textContent
                   };
                   openPopup(selectedRequest);
                 });
