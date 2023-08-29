@@ -51,11 +51,11 @@ header {
 
 .container {
     display: flex;
-    height: 80vh; 
+    height: 88vh; 
     margin-top: 20px;
     border: none; 
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(255, 182, 193, 0.7); 
+    box-shadow: 0 0 10px #24292e; 
     margin-left: 10px;
     margin-right: 10px;
 }
@@ -64,6 +64,7 @@ header {
     width: 25%;
     overflow-y: scroll;
     margin : 5px;
+    background-color: #24292e;
     border: 1px solid white;
     border-radius: 5px 0px 0px 5px;
 }
@@ -85,25 +86,30 @@ header {
 
 .actual-conversation {
     flex: 1;
-    height: 100%;
+    height: 90%;
     padding: 10px;
-    background-color: white;
+    background-color: #F7F9F9;
 }
 
 .change-conv-status{
     display: none;
     margin: 0 auto;
     padding: 5px;
+    padding-bottom: 3px;
     border-radius: 5px 5px 5px 5px;
-    background: linear-gradient(20deg, #ffb6c1, #3b434d);
+    background:#27AE60;
+    color: white;
+    border: none;
 }
 
 .messages{
     display: none;
     flex-direction: column;
     overflow-y: scroll;
-    height: 75%;
+    height: 90%;
     gap: 10px;
+    border: 0.0625rem solid #d4d4e0;
+    padding-bottom: 10px;
 }
 
 
@@ -111,34 +117,45 @@ header {
     width: fit-content; /* Limit message width for better readability */
     padding: 10px;
     border-radius: 10px;
+    margin-left: 10px;
 }
 
 .sender-message {
-    background-color: #DCF8C6; /* Color for messages sent by the sender */
+    background-color: #007bff; /* Color for messages sent by the sender */
     margin-left: auto;
     margin-right: 10px;
+    color: white;
 }
 
 .receiver-message {
-    background-color: #F3F3F3; /* Color for messages received from the other party */
+    background-color: #EBF5FB; /* Color for messages received from the other party */
+    margin-left: 10px;
 }
 
 .message-information{
     background-color: transparent;
-    color: white;
+    color: #24292e;
+    padding-top: 5px;
 }
 
 .input-area {
     display: none;
     align-items: center;
-    padding: 10px;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-bottom: 5px;
     margin-top: 10px;
 }
 
 #message-input {
     flex: 1;
     padding: 5px;
-    border-radius: 5px;
+    background: #f7f8f8;
+    background-color: #fff;
+    border: 0.0625rem solid #d4d4e0;
+    border-radius: 1.5625rem;;
+
 }
 
 #send-button {
@@ -148,12 +165,13 @@ header {
     color: white;
     border-radius: 5px;
     cursor: pointer;
+    border: none;
 }
 
 .conversation_information{
-  background-color: #F5E8F3;
-  border: 2px solid #ffb6c1;
-  height: 100px;
+  background-color: white;
+  border: 2px solid #24292e;
+  height: auto;
   }
 
 .conversation_information_request_id{
@@ -169,4 +187,6 @@ header {
 
 .conv-info-text{
     font-size: 15px;
+    margin-bottom: 5px;
 }
+
