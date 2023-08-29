@@ -39,15 +39,33 @@
         <div class="selected-items" id="selectedItems"> </div>
 
     </div>
+    <div>           
+        <div class="container">
+            <textarea id="object-input" placeholder="Object..."></textarea>
+            <textarea id="text-input" placeholder="Start typing..."></textarea>
+        </div>
 
-    <div class="container">
-        <textarea id="object-input" placeholder="Object..."></textarea>
-        <textarea id="text-input" placeholder="Start typing..."></textarea>
+        <div class="send-button"> 
+            <button id="send-button">Envoyer la demande</button>
+        </div>
+        
     </div>
-    <div class="send-button"> 
-        <button id="send-button">Envoyer la demande</button>
-    </div>
-
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-item">
+                <img src="ressources/demande1.png" alt="Icône 1">
+                <p class="footer_text">1. Je formule ma demande</p>
+            </div>
+            <div class="footer-item">
+                <img src="ressources/demande2.png" alt="Icône 2">
+                <p class="footer_text">2. Je l'assigne à un rôle</p>
+            </div>
+            <div class="footer-item">
+                <img src="ressources/demande3.png" alt="Icône 3">
+                <p class="footer_text">3. Et je l'envoie !</p>
+            </div>
+        </div>
+    </footer>
     <script>
     document.addEventListener("DOMContentLoaded", function() {
         const itemSelect = document.getElementById("role");

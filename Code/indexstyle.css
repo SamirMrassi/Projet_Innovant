@@ -89,6 +89,7 @@ p{
 
 #transformButton:hover {
 	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+	background: #2e3032;
 }
 
 .connection-form {
