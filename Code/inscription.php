@@ -89,20 +89,20 @@
 			</div>
 		</div>
 		<footer class="footer">
-        <div class="footer-content">
-            <div class="footer-item">
-                <img src="ressources/verifier.png" alt="Icône 1">
-                <p class="footer_text">Efficacité Instantanée.</p>
-            </div>
-            <div class="footer-item">
-                <img src="ressources/verifier.png" alt="Icône 2">
-                <p class="footer_text">Collaboration Sans Frontières.</p>
-            </div>
-            <div class="footer-item">
-                <img src="ressources/verifier.png" alt="Icône 3">
-                <p class="footer_text">Communication Ciblée.</p>
-            </div>
-        </div>
-    </footer>
+			<div class="footer-content">
+				<div class="footer-item">
+					<img src="ressources/verifier.png" alt="Icône 1">
+					<p class="footer_text">Efficacité Instantanée.</p>
+				</div>
+				<div class="footer-item">
+					<img src="ressources/verifier.png" alt="Icône 2">
+					<p class="footer_text">Collaboration Sans Frontières.</p>
+				</div>
+				<div class="footer-item">
+					<img src="ressources/verifier.png" alt="Icône 3">
+					<p class="footer_text">Communication Ciblée.</p>
+				</div>
+			</div>
+    	</footer>
 	</body>
 </html>
