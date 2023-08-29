@@ -8,7 +8,7 @@
 	<head>
 		<title>Conversations</title>
 		<meta charset="utf-8">
-		<link rel="stylesheet" href="conversationstyle.css" />
+		<link rel="stylesheet" href="conversations.css" />
 	</head>
 
 	<body>
