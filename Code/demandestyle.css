@@ -1,36 +1,40 @@
 @import url('https://fonts.googleapis.com/css2?family=Special+Elite&family=Yatra+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
 
-body {
-  background-image: linear-gradient(60deg, #24292e 0%, #3b434d 100%);
-  min-height: 100vh;
-  min-width: 250px;
-  font-style: none;
-  font-size: 1rem;
-  font-family: 'Roboto', sans-serif;
+html, body{
+	height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
+body {
+  min-height: 100vh;
+  min-width: 250px;
+  }
+
+
 header {
-  display: flex;
-  align-items: center;
-  border-bottom: 2px solid #ffb6c1;
-  padding: 10px;
-  height: 50px;
+	background-image: linear-gradient(60deg, #24292e 0%, #3b434d 100%);
+	display: flex;
+	align-items: center;
+	padding: 10px;
+	height: 60px;
 }
 
 .title {
-  flex: 1;
-  letter-spacing: 3px;
-  font-size: 2.8rem;
-  text-shadow: 6px 6px 16px #00000042;
-  color: #ffb6c1;
-  font-family: 'Yatra One', cursive;
+	flex: 1;
+	letter-spacing: 3px;
+	font-size: 2.8rem;
+	text-shadow: 6px 6px 16px #00000042;
+	color: white;
+	font-family: 'Open Sans', sans-serif;
 }
 
 .line {
   width: 2px;
   height: 100%;
-  background-color: #ffb6c1;
+  background-color: white;
   margin: 0 10px;
 }
 
@@ -39,8 +43,17 @@ header {
   height: 50px;
   margin-left: 10px;
   cursor: pointer;
-  background-color: #ffb6c1;
+  background-color: white;
   border-radius: 45px;
+}
+
+p{
+	width: 500px;
+	margin-left: 20px;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 18px;
+  color: #24292e;
+  
 }
 
 .request-select{
@@ -58,7 +71,7 @@ header {
   border-radius: 4px;
   flex-wrap: wrap;
   background-color: #f0f0f0;
-  border: 1px solid #ccc;
+  border: 0.2px solid #24292e;
   margin-top: 10px;
 }
 
@@ -90,10 +103,11 @@ header {
 }
 
 #object-input{
-  width: 100%;
+  width: 99.4%;
   padding: 5px;
   resize: none;
   background-color: white;
+  margin-right: 5px;
   margin-right: 5px;
 }
 
@@ -101,11 +115,11 @@ header {
     width: 100%;
     height: 100%;
     resize: none;
-    border: 1px solid #ccc;
+    border: 1px solid #e0e0e0;
     padding: 5px;
     font-size: 16px;
     box-sizing: border-box;
-    background-color: #FFF2FD;
+    background-color: #f1f1f1
 }
 
 .send-button {
@@ -120,10 +134,48 @@ header {
 #send-button{
   padding: 10px;
   border-radius: 5px 5px 5px 5px;
-  background: linear-gradient(20deg, #ffb6c1, #3b434d);
+  background-color:#24292e;
+	font-size: 20px;
+	border:#24292e;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 18px;
+	color: white;
+  
 }
 
 #send-button:hover{
-  background: linear-gradient(20deg, #3b434d, #ffb6c1);
+  background: #2e3032;
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
 
+.footer {
+  padding: 20px;
+  text-align: center;
+  position: sticky;
+  bottom: 0;
+  margin-top: 150px;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between; /* Espacement égal entre les éléments */
+  width: 90%; /* Ajustez la largeur maximale selon vos besoins */
+  
+}
+
+.footer-item {
+  flex: 1; /* Prend autant d'espace que nécessaire */
+  padding: 10px;
+}
+
+.footer-item img {
+  max-width: 200px; /* Ajustez la taille de l'icône selon vos besoins */
+  margin-right: 10px; /* Espacement à droite de l'icône */
+}
+
+.footer_text{
+margin-top: 10px;
+margin-bottom: 10px;
+margin-left: 0px;
+margin-right: 0px;
+}
