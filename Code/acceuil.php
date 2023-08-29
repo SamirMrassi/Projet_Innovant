@@ -26,7 +26,7 @@
         <a href="#" class="grid-item">Consulter les tickets</a>
     </div>
 
-    <!-- Hidden HTML structure for the popup content, that will only be executed when we click on a "demande" -->
+    <!-- Hidden HTML structure for the popup content, that will only be executed when we click on the "disponibility"-button -->
     <div id="popup-container" class="popup-container">
       <div class="popup-content">
         <span class="popup-close" id="popup-close">&times;</span>
@@ -46,33 +46,75 @@
       </div>
     </div>
 
+    <?php
+        if (isset($_POST['begin-date']) && isset($_POST['end-date'])) {
+            $beginDate = $_POST['begin-date'];
+            $endDate = $_POST['end-date'];
+            
+            $stmt = $conn->prepare("INSERT INTO unavailibilities (start_date, end_date, id_user) VALUES (?, ?, ?)");
+            $stmt->bind_param("ssi", $beginDate, $endDate, $_SESSION['user_id']);
+            $stmt->execute();
+        }
+    ?>
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const popupContainer = document.getElementById('popup-container');
             const popupRequestId = document.getElementById('popup-titre');
             const popupUsername = document.getElementById('popup-description');
             const popupText = document.getElementById('popup-calendar');  
+            const dateDebutInput = document.getElementById('dateDebut');
+            const dateFinInput = document.getElementById('dateFin');
+            const errorText = document.createElement('p'); // Create an element for error messages
+
+            const popupClose = document.getElementById('popup-close');
+            const acceptButton = document.getElementById('accept-button');
            
-           
-           // Event listener in oppening button
-           const popupOpen = document.getElementById('bouton_disponibilite');
+            // Event listener in oppening button
+            const popupOpen = document.getElementById('bouton_disponibilite');
             popupOpen.addEventListener('click', () => {
                 popupContainer.style.display = 'block';
+                errorText.textContent = ""; // Clear any previous error messages
             });
 
             // Event listener in popup close button
-            const popupClose = document.getElementById('popup-close');
+            
             popupClose.addEventListener('click', () => {
                 popupContainer.style.display = 'none';
             });
 
-            const acceptButton = document.getElementById('accept-button');
+            
             acceptButton.addEventListener('click', () => {
-                // Add your logic to handle accepting the request here
-                popupContainer.style.display = 'none';  // make the popup disappear
-                const data = new FormData(); 
-               
-                xhr.send(data);
+                const today = new Date();
+                if (!dateDebutInput.value || !dateFinInput.value) {
+                    errorText.innerText = "Vous devez remplir la date de début et de fin!";
+                    alert("Vous devez remplir la date de début et de fin!");
+                    //acceptButton.parentNode.appendChild(errorText);
+                } else if (dateDebutInput.value > dateFinInput.value) {
+                    errorText.textContent = "Votre date de début ne peut pas être supérieure à votre date de fin!";
+                    alert("Votre date de début ne peut pas être supérieure à votre date de fin!");
+                    //acceptButton.parentNode.appendChild(errorText);
+                } else if (dateDebutInput.value < today.toISOString().split('T')[0]) {
+                    errorText.textContent = "Votre indisponibilité ne peut commencer qu'à partir de demain!";
+                    alert("Votre indisponibilité ne peut commencer qu'à partir de demain!");
+                    //acceptButton.parentNode.appendChild(errorText);
+                } else {
+                    popupContainer.style.display = 'none'; // Hide the popup
+                    const data = new FormData();
+                    data.append("begin-date", dateDebutInput.value);
+                    data.append("end-date", dateFinInput.value);
+
+                    // Send the data to the server using AJAX
+                    const xhr = new XMLHttpRequest();
+                    xhr.open("POST", "", true);
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState === XMLHttpRequest.DONE) {
+                            if (xhr.status === 200) {
+                            } else { console.error("Erreur lors de la requête AJAX"); }
+                        }
+                    };
+                    xhr.send(data);
+                }
             });
 
         });
