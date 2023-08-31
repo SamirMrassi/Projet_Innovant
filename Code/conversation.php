@@ -14,6 +14,13 @@
 	<body>
 		<header>
 	        <div class="title">Virtu'Com</div>
+
+			<div class="user_information">
+				<?php
+					echo ' <span class = "text" style ="color: white; font-weight: bold;"> '. $_SESSION['firstname']. ' ' . $_SESSION['lastname']. ' (' . $_SESSION['name_role']. ') </span>';
+				?>
+        	</div>
+
 	        <div class="line"></div>
 	        <div class="images">
 	            <a href="acceuil.php"><img class="image" src="ressources/menu.png" title="Menu" alt="Image 2" ></a>
@@ -37,7 +44,7 @@
 					$conversation_list = $stmt->get_result();
 
 					if($conversation_list->num_rows == 0){
-	            		echo "<p> Vous n'avez aucune conversation ouverte à afficher.</p>";
+	            		echo '<p style="color: white; margin-left: 15px;"> Aucune conversation à afficher.</p>';
 	            	} else{
 	            		foreach($conversation_list as $conv){
 
@@ -75,7 +82,7 @@
 				    // If change status request was trigerred
 				    if (!empty($_POST['conv-id'])){
 				   	    $stmt = $conn->prepare("UPDATE requests SET request_status = 3
-												WHERE id_request = (SELECT id_request FROM conversations WHERE id_conversation = 1);");
+												WHERE id_request = (SELECT id_request FROM conversations WHERE id_conversation = ?);");
 					    $conversationID = $_POST['conv-id'];
 					    $stmt->bind_param("i", $conversationID);
 					    $stmt->execute();

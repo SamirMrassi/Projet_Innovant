@@ -14,6 +14,13 @@
 <body>
     <header>
         <div class="title">Virtu'Com</div>
+        
+			<div class="user_information">
+				<?php
+					echo ' <span class = "text" style ="color: white; font-weight: bold;"> '. $_SESSION['firstname']. ' ' . $_SESSION['lastname']. ' (' . $_SESSION['name_role']. ') </span>';
+				?>
+        	</div>
+			
         <div class="line"></div>
         <div class="images">
             <a href="acceuil.php"><img class="image" src="ressources/menu.png" title="Menu" alt="Image 2" ></a>
@@ -21,35 +28,38 @@
         </div>  
     </header>
     
-    <div class="roles-destinataires">
-        <p> Rôles destinataire :  <?php echo($_SESSION['lastname']) ?>
-         <select class="request-select" id="role" name="role" style="width: 200px;">
-            <option value=""></option>
-            <?php
-                $stmt = $conn->prepare("SELECT * FROM roles");
-                $stmt->execute();
-                $roles_list = $stmt->get_result();
-                if ($roles_list->num_rows > 0) {
-                    while ($row = $roles_list->fetch_assoc()) 
-                        echo '<option value="' . $row["name_role"] . '"  >' . $row["name_role"] . '</option>';
-                }
-            ?>
+    <div class="request-area">
+        <div class="roles-destinataires">
+            <p> Rôles destinataire :
+            <select class="request-select" id="role" name="role" style="width: 200px;">
+                <option value=""></option>
+                <?php
+                    $stmt = $conn->prepare("SELECT * FROM roles");
+                    $stmt->execute();
+                    $roles_list = $stmt->get_result();
+                    if ($roles_list->num_rows > 0) {
+                        while ($row = $roles_list->fetch_assoc()) 
+                            echo '<option value="' . $row["name_role"] . '"  >' . $row["name_role"] . '</option>';
+                    }
+                ?>
 
-         </select></p>
-        <div class="selected-items" id="selectedItems"> </div>
+            </select></p>
+            <div class="selected-items" id="selectedItems"> </div>
 
-    </div>
-    <div>           
-        <div class="container">
-            <textarea id="object-input" placeholder="Object..."></textarea>
-            <textarea id="text-input" placeholder="Start typing..."></textarea>
+        <div>           
+            <div class="container">
+                <textarea id="object-input" placeholder="Object..."></textarea>
+                <textarea id="text-input" placeholder="Start typing..."></textarea>
+            </div>
+
+            <div class="send-button"> 
+                <button id="send-button">Envoyer la demande</button>
+            </div>
+            
         </div>
 
-        <div class="send-button"> 
-            <button id="send-button">Envoyer la demande</button>
-        </div>
-        
-    </div>
+    </div>            
+
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-item">

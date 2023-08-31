@@ -15,6 +15,13 @@ session_start();
     <header>
         <div class="title">Virtu'Com</div>
         <!-- SI C'EST UN PROJECT MANAGER; METTRE À DISPOSITION UNE PAGE DE CONFIGURATION DE L'ÈQUIPE. -->
+        
+			<div class="user_information">
+				<?php
+					echo ' <span class = "text" style ="color: white; font-weight: bold;"> '. $_SESSION['firstname']. ' ' . $_SESSION['lastname']. ' (' . $_SESSION['name_role']. ') </span>';
+				?>
+        	</div>
+			
         <div class="line"></div>
         <div class="images">
             <a href="acceuil.php"><img class="image"src="ressources/menu.png" title="menu" alt="Image 1" > </a>
@@ -37,28 +44,43 @@ session_start();
         $stmt = $conn->prepare("SELECT id_role, name_role FROM roles");
         $stmt->execute();
         $roles_list = $stmt->get_result();
+
     ?>
 
     <!-- a div to display all "demandes" in a grid view -->
-    <div class="grid">
-      <?php foreach ($requests_list as $request):
-                $rolename = $request['id_role'];
-                foreach($roles_list as $role){
-                    if ($role['id_role'] == $request['id_role']){
-                        $rolename = $role['name_role']; break;
+    
+
+        <?php 
+            if($requests_list->num_rows == 0){
+                echo 
+                    '<div class="div_no_requests" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh;">
+                    <span class="no_requests" style="color: black; font-weight: bold; font-size: 20px; margin-bottom: 20px;">
+                        Aucune notification à afficher !
+                    </span>
+                    <img class="image" src="ressources/nothing.jpg" title="Se déconnecter" alt="Image 1" style="width: 50%; height: 60%;">
+                </div>'   
+                        ;
+            }else{
+                echo '<div class="grid">';
+                foreach ($requests_list as $request):
+                    $rolename = $request['id_role'];
+                    foreach($roles_list as $role){
+                        if ($role['id_role'] == $request['id_role']){
+                            $rolename = $role['name_role']; break;
+                        }
                     }
-                }
+            
         ?>
-        <div class="request">   
-            <div class="request-box">
-                <div class="request-id-title"><?php echo "Demande Nr. "; ?></div>
-                <div class="request-id"><?php echo $request['id_request']; ?></div>
+            <div class="request">   
+                <div class="request-box">
+                    <div class="request-id-title"><?php echo "Demande Nr. "; ?></div>
+                    <div class="request-id"><?php echo $request['id_request']; ?></div>
+                </div>
+                <div class="username"><?php echo "Provenant de : " . $request['firstname_user'] . " " . $request['lastname_user'] . " ( " . $rolename . " )" ?></div>
+                <div class="object"><?php echo "<strong>Objet : </strong>" . $request['object_text']; ?></div>
+                <div class="invisible_div" style="display:none;"><?php echo ""  . $request['description']; ?></div> 
             </div>
-            <div class="username"><?php echo "Provenant de : " . $request['firstname_user'] . " " . $request['lastname_user'] . " ( " . $rolename . " )" ?></div>
-            <div class="object"><?php echo "<strong>Objet : </strong>" . $request['object_text']; ?></div>
-            <div class="invisible_div" style="display:none;"><?php echo ""  . $request['description']; ?></div> 
-        </div>
-      <?php endforeach; ?>
+      <?php endforeach; }?>
     </div>
 
 
