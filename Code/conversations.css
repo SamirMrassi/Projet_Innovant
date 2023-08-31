@@ -64,7 +64,7 @@ header {
     width: 25%;
     overflow-y: scroll;
     margin : 5px;
-    background-color: #24292e;
+    background: linear-gradient( #24292e, white);
     border: 1px solid white;
     border-radius: 5px 0px 0px 5px;
 }

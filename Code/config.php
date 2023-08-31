@@ -5,7 +5,7 @@
 	$servername = "localhost";
 	$username = "root";
 	$password = "";
-	$dbname = "virtucom";
+	$dbname = "virtucomm";
     $conn = new mysqli($servername, $username, $password, $dbname);
 
     // Vérification de la connexion

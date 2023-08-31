@@ -26,6 +26,13 @@ header {
 	height: 60px;
 }
 
+.div_no_requests{
+  display: flex;
+  align-items: center; 
+  justify-content: center; 
+  height: 100vh;
+}
+
 .title {
 	flex: 1;
 	letter-spacing: 3px;
