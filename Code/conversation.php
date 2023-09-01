@@ -31,6 +31,14 @@
 		<div class="container">
 	        <div class="conversations">
 	        	<?php
+	        		// check if the user is available right-now
+			        $stmt = $conn->prepare("SELECT DATE_FORMAT(start_date, '%Y-%m-%d') as start_date, DATE_FORMAT(end_date, '%Y-%m-%d') as end_date FROM users 
+			                                WHERE id_user=?");
+			        $stmt->bind_param("i", $_SESSION['user_id']);
+			        $stmt->execute();
+			        $result = $stmt->get_result();
+			        $dates_list = $result->fetch_assoc();
+
 					$stmt = $conn->prepare("SELECT c.id_conversation, c.id_responsible, c.id_request
 											FROM conversations c
 											WHERE (c.id_responsible = ?
@@ -43,7 +51,12 @@
 					$stmt->execute();
 					$conversation_list = $stmt->get_result();
 
-					if($conversation_list->num_rows == 0){
+					$today = new DateTime();
+			        $startDate = new DateTime($dates_list["start_date"]);
+			        $endDate = new DateTime($dates_list["end_date"]);
+			        if ($today >= $startDate && $today <= $endDate) {
+			        	echo '<p style="color: white; margin-left: 15px;"> Vous êtes en vacances, vous n\'avez pas accès aux conversations.</p>';
+			        }else if($conversation_list->num_rows == 0){
 	            		echo '<p style="color: white; margin-left: 15px;"> Aucune conversation à afficher.</p>';
 	            	} else{
 	            		foreach($conversation_list as $conv){
@@ -69,7 +82,7 @@
 							echo ' </div>';
 						}
 
-					// add the new message in  the database if send-button was clicked
+					// add the new message in  the database if send-button on "Enter"-key were clicked
 					if (!empty($_POST['textMessage']) AND !empty($_POST['conversation-id']) ){ // add the new message in  the database		
 					   $stmt = $conn->prepare("INSERT INTO messages (message_text, id_sender, id_conversation) VALUES (?,?,?)");
 					   $message_text = $_POST['textMessage'];
@@ -86,11 +99,18 @@
 					    $conversationID = $_POST['conv-id'];
 					    $stmt->bind_param("i", $conversationID);
 					    $stmt->execute();
+
+					    $stmt = $conn->prepare("SELECT description FROM requests JOIN conversations c ON c.id_conversation = ? Where c.id_request = requests.id_request;");
+					    $stmt->bind_param("i", $conversationID);
+					    $stmt->execute();
+					    $request_description = $stmt->get_result();
 				    } 	 
 	            }	
 				?>
 	        </div>
 	        <div class="selected-conversation">
+	        	<div class="text-request">
+			    </div>
 	            <div class="actual-conversation">
 	            	<div class="messages">
 	            		<!-- Here will be filled the messages of the conversation with Javascript -->
@@ -99,7 +119,10 @@
 		                <input type="text" id="message-input" placeholder="Type your message...">
 		                <button id="send-button">Envoyer</button>
 		            </div>
-					<button class="change-conv-status" title="La conversation disparaitra">Clore la demande</button>
+		            <div class="buttons-container">
+						<button class="change-conv-status" id="change-conv-status" title="La conversation disparaitra">Clore la demande</button>
+						<button class="change-conv-status" id="create-ticket" title="suivre les actions à mener">Créer un ticket</button>
+					</div>
 	            </div>
 	        </div>
 	    </div>
@@ -111,8 +134,10 @@
 				const messages = document.querySelector(".messages");
 				const inputArea = document.querySelector(".input-area");
 				const messageInput = document.getElementById("message-input");
-				const changeStatus = document.querySelector(".change-conv-status");
+				const changeStatus = document.getElementById("change-conv-status");
+				const createTicket = document.getElementById("create-ticket");
 				const sendButton = document.getElementById("send-button");
+				const textRequest = document.querySelector(".text-request");
 				let username = document.querySelector(".invisible_div_username").textContent;
 				let interlocuteur = null;
 				let selectedConversation = null;
@@ -125,10 +150,7 @@
 						// Make the messages- and input-areas visible 
 						messages.style.display = "flex";
 						inputArea.style.display = "flex";
- 
-						// Si l'utilisateur est celui qui a fait la demande, rendre visible le bouton 
-						// qui changera le status de la demande
-						
+ 						createTicket.style.display = "flex";
 
 						// Préparer la donnée de la conversation (id) à envoyer au script php 
 						// afin de recevoir les messages de la conversation de la base des données
@@ -143,14 +165,22 @@
 				        xhr.onreadystatechange = function() {
 				            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
 				                const received_messages = JSON.parse(xhr.responseText);
-				                received_messages.forEach((msg, index) => {
-				                	//If this user created the request, he should be able to change the status of the request to completed
-				                	if(msg.request_user_id === thisUserID){
-				                		changeStatus.style.display = "block";
-				                	}else{
-				                		changeStatus.style.display = "none";
-				                	}
+				                var firstRow = received_messages.shift();
 
+				                //If this user created the request, he should be able to change the status of the request to completed
+				                if (thisUserID === firstRow.id_user){
+				                	changeStatus.style.display = "flex";
+				                }else{
+				                	changeStatus.style.display = "none";
+				                }
+
+				                var secondRow = received_messages.shift();
+				                textRequest.textContent = '';
+				        		textRequest.textContent = secondRow.description;
+				        		console.log(textRequest.textContent);
+
+				                received_messages.forEach((msg, index) => {
+				                	
 				                	const senderDiv = document.createElement('div');
 				                    senderDiv.classList.add('message-information');
 
@@ -195,10 +225,8 @@
 				        });
 					});
             	});
-
-
-				// Add event listener to send button
-				sendButton.addEventListener("click", function() {
+				// Fonction pour envoyer le message
+				function sendMessage() {
 					const messageText = messageInput.value;
 					if (messageText.trim() !== "") {
 						const data = new FormData();
@@ -232,6 +260,16 @@
 	                    messages.appendChild(messageDiv);
 						messageInput.value = "";
 					}
+				}
+
+				// Ajoutez un gestionnaire d'événements "click" pour le bouton "Envoyer"
+				sendButton.addEventListener("click", sendMessage);
+
+				// Ajoutez un gestionnaire d'événements "keypress" pour le champ de texte
+				messageInput.addEventListener("keypress", function (event) {
+				    if (event.key === "Enter") {
+				        sendMessage();
+				    }
 				});
 		    });
 		</script>

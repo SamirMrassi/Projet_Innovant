@@ -73,6 +73,7 @@ header {
     border-radius: 5px;
     border: 1px solid green;
     margin: 5px;
+    cursor: pointer;
 }
 
 .selected-conversation {
@@ -82,20 +83,52 @@ header {
     border: 1px solid #949494;
     border-radius: 0px 5px 5px 0px;
     margin: 5px;
+    position: relative; 
 }
+
+.text-request {
+    height: 10%;
+    overflow: hidden;
+    background-color: #EAEAEA;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+    position: relative;
+}
+
 
 .actual-conversation {
     flex: 1;
-    height: 90%;
+    height: 83%;
     padding: 10px;
     background-color: #F7F9F9;
 }
 
+.input-area {
+    height: 5%;
+    display: none;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 5px;
+    margin-top: 10px;
+}
+
+.buttons-container{
+    display: flex;
+    height: 3%;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 5px; /* Place "buttons-container" en bas */
+    width: 100%;
+}
+
 .change-conv-status{
     display: none;
-    margin: 0 auto;
+    margin: 5px;
+    align-items: center;
     padding: 5px;
-    padding-bottom: 3px;
     border-radius: 5px 5px 5px 5px;
     background:#27AE60;
     color: white;
@@ -138,15 +171,7 @@ header {
     padding-top: 5px;
 }
 
-.input-area {
-    display: none;
-    align-items: center;
-    padding-left: 10px;
-    padding-top: 10px;
-    padding-right: 10px;
-    padding-bottom: 5px;
-    margin-top: 10px;
-}
+
 
 #message-input {
     flex: 1;

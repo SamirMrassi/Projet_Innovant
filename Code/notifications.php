@@ -29,6 +29,14 @@ session_start();
         </div>  
     </header>
     <?php
+        // check if the user is available right-now
+        $stmt = $conn->prepare("SELECT DATE_FORMAT(start_date, '%Y-%m-%d') as start_date, DATE_FORMAT(end_date, '%Y-%m-%d') as end_date FROM users 
+                                WHERE id_user=?");
+        $stmt->bind_param("i", $_SESSION['user_id']);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $dates_list = $result->fetch_assoc();
+
         // fetching the "demandes" from the database
         $role_id = $_SESSION['role_id'];
         $user_id = $_SESSION['user_id'];
@@ -45,30 +53,34 @@ session_start();
         $stmt->execute();
         $roles_list = $stmt->get_result();
 
-    ?>
-
-    <!-- a div to display all "demandes" in a grid view -->
-    
-
-        <?php 
-            if($requests_list->num_rows == 0){
-                echo 
-                    '<div class="div_no_requests" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh;">
+        $today = new DateTime();
+        $startDate = new DateTime($dates_list["start_date"]);
+        $endDate = new DateTime($dates_list["end_date"]);
+        if ($today >= $startDate && $today <= $endDate) {
+            echo 
+                '<div class="div_no_requests" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh;">
+                <span class="no_requests" style="color: black; font-weight: bold; font-size: 20px; margin-bottom: 20px;">
+                    Profitez de vos vacances!
+                </span>
+                <img class="image" src="ressources/vacances.png" title="Vous êtes en vacances :)" alt="Image 1" style="width: 50%; height: 60%;">
+            </div>';
+        } else if($requests_list->num_rows == 0){
+            echo 
+                '<div class="div_no_requests" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh;">
                     <span class="no_requests" style="color: black; font-weight: bold; font-size: 20px; margin-bottom: 20px;">
                         Aucune notification à afficher !
                     </span>
                     <img class="image" src="ressources/nothing.jpg" title="Se déconnecter" alt="Image 1" style="width: 50%; height: 60%;">
-                </div>'   
-                        ;
-            }else{
-                echo '<div class="grid">';
-                foreach ($requests_list as $request):
-                    $rolename = $request['id_role'];
-                    foreach($roles_list as $role){
-                        if ($role['id_role'] == $request['id_role']){
-                            $rolename = $role['name_role']; break;
-                        }
+                </div>';
+        }else{
+            echo '<div class="grid">';
+            foreach ($requests_list as $request):
+                $rolename = $request['id_role'];
+                foreach($roles_list as $role){
+                    if ($role['id_role'] == $request['id_role']){
+                        $rolename = $role['name_role']; break;
                     }
+                }
             
         ?>
             <div class="request">   
