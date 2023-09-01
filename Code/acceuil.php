@@ -59,8 +59,11 @@
             $beginDate = $_POST['begin-date'];
             $endDate = $_POST['end-date'];
             
-            $stmt = $conn->prepare("INSERT INTO unavailibilities (start_date, end_date, id_user) VALUES (?, ?, ?)");
-            $stmt->bind_param("ssi", $beginDate, $endDate, $_SESSION['user_id']);
+            $stmt = $conn->prepare("UPDATE users SET start_date=?  WHERE id_user=?");
+            $stmt->bind_param("si", $beginDate,  $_SESSION['user_id']);
+            $stmt->execute();
+            $stmt = $conn->prepare("UPDATE users SET end_date=?  WHERE id_user=?");
+            $stmt->bind_param("si", $endDate,  $_SESSION['user_id']);
             $stmt->execute();
         }
     ?>
@@ -94,6 +97,8 @@
             
             acceptButton.addEventListener('click', () => {
                 const today = new Date();
+                console.log(today.toISOString().split('T')[0]);
+                console.log(dateDebutInput.value);
                 if (!dateDebutInput.value || !dateFinInput.value) {
                     errorText.innerText = "Vous devez remplir la date de début et de fin!";
                     alert("Vous devez remplir la date de début et de fin!");
